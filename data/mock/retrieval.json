@@ -3,7 +3,7 @@
     "query_id": "q1",
     "results": [
       {
-        "case_id": "SC_1963_001",
+        "case_id": "sc:MOCK1963001",
         "score": 1.0,
         "matched_segments": [
           {
@@ -13,7 +13,7 @@
         ]
       },
       {
-        "case_id": "SC_2003_014",
+        "case_id": "sc:MOCK1971002",
         "score": 0.9,
         "matched_segments": [
           {
@@ -23,7 +23,7 @@
         ]
       },
       {
-        "case_id": "SC_2015_220",
+        "case_id": "sc:MOCK2003014",
         "score": 0.8,
         "matched_segments": [
           {
@@ -33,7 +33,7 @@
         ]
       },
       {
-        "case_id": "HC_2019_088",
+        "case_id": "sc:MOCK2015220",
         "score": 0.7,
         "matched_segments": [
           {
@@ -43,8 +43,28 @@
         ]
       },
       {
-        "case_id": "SC_2021_310",
+        "case_id": "hc:MOCK2019088",
         "score": 0.6,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "sc:MOCK2021310",
+        "score": 0.5,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "sc:MOCK2022400",
+        "score": 0.4,
         "matched_segments": [
           {
             "sent_idx": 0,

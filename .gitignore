@@ -1,7 +1,8 @@
 # Large or regenerable data stays out of git (download / rebuild with the scripts)
 data/raw/
 data/processed/
-data/from_b/
+data/from_b/*
+!data/from_b/pagerank.csv
 models/
 outputs/
 *.faiss

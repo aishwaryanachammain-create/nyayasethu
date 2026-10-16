@@ -1,33 +1,47 @@
 [
   {
-    "case_id": "SC_1963_001",
+    "case_id": "sc:MOCK1963001",
     "label": "followed",
     "confidence": 0.82,
     "n_citing": 4,
     "evidence": [
       {
-        "citing_id": "SC_2003_014",
-        "sent": "Following (1963) 3 SCR 515, actual loss must be shown before forfeiture.",
+        "citing_id": "sc:MOCK2003014",
+        "sent": "Following Ramesh Traders v. Kavita Builders, [1963] 3 SCR 515, actual loss must be shown before forfeiture.",
         "treatment": "followed",
         "weight": 1.0
       },
       {
-        "citing_id": "SC_2015_220",
-        "sent": "The ratio in (1963) 3 SCR 515 is distinguishable as the deposit here was nominal.",
+        "citing_id": "sc:MOCK2015220",
+        "sent": "The ratio in Ramesh Traders v. Kavita Builders, [1963] 3 SCR 515 is distinguishable as the deposit here was nominal.",
         "treatment": "distinguished",
         "weight": 1.0
       },
       {
-        "citing_id": "HC_2019_088",
-        "sent": "Relying on AIR 1963 SC 1405, the landlord must prove loss.",
+        "citing_id": "hc:MOCK2019088",
+        "sent": "Relying on Ramesh Traders v. Kavita Builders, [1963] 3 SCR 515, the landlord must prove loss.",
         "treatment": "followed",
         "weight": 1.0
       },
       {
-        "citing_id": "SC_2021_310",
-        "sent": "We follow the principle in (1963) 3 SCR 515.",
+        "citing_id": "sc:MOCK2021310",
+        "sent": "We follow the principle in Ramesh Traders v. Kavita Builders, [1963] 3 SCR 515.",
         "treatment": "followed",
         "weight": 1.0
+      }
+    ]
+  },
+  {
+    "case_id": "sc:MOCK1971002",
+    "label": "overruled",
+    "confidence": 0.9,
+    "n_citing": 1,
+    "evidence": [
+      {
+        "citing_id": "sc:MOCK2022400",
+        "sent": "Sunder Lal v. State of Mysore, [1971] 2 SCR 40 is overruled; a fee need not be matched by a specific service.",
+        "treatment": "overruled",
+        "weight": 2.0
       }
     ]
   }

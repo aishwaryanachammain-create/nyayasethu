@@ -22,7 +22,9 @@ pytest>=8.0
 # Member B — validity / summary track (exact pins added as each phase lands)
 huggingface_hub
 rank_bm25
-rapidfuzz
+rapidfuzz==3.14.6       # Phase 1: fuzzy case-name resolution
+matplotlib==3.11.2      # Phase 1: graph figures
+python-docx==1.2.0      # reading docs/NyayaSethu_Review_1.docx
 rouge-score
 bert-score
 spacy

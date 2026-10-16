@@ -7,7 +7,7 @@ paths:
   raw: data/raw
   processed: data/processed
   mock: data/mock
-  judgments: data/judgments.jsonl          # Week 2 hand-off to Member B
+  judgments: data/processed/judgments.jsonl  # full corpus (~0.5 GB, not in git); the 50-doc data/judgments.jsonl stays committed
   segments: data/segments.parquet          # Week 4 hand-off to Member B
   validation: data/validation
   models: models

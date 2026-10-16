@@ -1,0 +1,85 @@
+  500 docs, 3101 mentions, 1166 edges
+  1000 docs, 6283 mentions, 2429 edges
+  1500 docs, 9444 mentions, 3680 edges
+  2000 docs, 12491 mentions, 4830 edges
+  2500 docs, 15889 mentions, 6080 edges
+  3000 docs, 19120 mentions, 7270 edges
+  3500 docs, 25288 mentions, 9075 edges
+  4000 docs, 34813 mentions, 11910 edges
+  4500 docs, 43124 mentions, 14309 edges
+  5000 docs, 52427 mentions, 17405 edges
+  5500 docs, 62691 mentions, 20828 edges
+  6000 docs, 73872 mentions, 24203 edges
+  6500 docs, 82609 mentions, 27135 edges
+  7000 docs, 90266 mentions, 29558 edges
+  7500 docs, 100864 mentions, 33229 edges
+{
+  "metadata_nodes": 38152,
+  "corpus_docs": 7949,
+  "citing_docs_with_edges": 5160,
+  "front_matter_sentences_skipped": 274631,
+  "mentions": 108653,
+  "mentions_resolved": 37321,
+  "resolution_rate_all_mentions": 0.3435,
+  "resolution_rate_reporter_citations": 0.4104,
+  "graph": {
+    "nodes_total": 41116,
+    "nodes_in_corpus": 7949,
+    "edges_judgment_level": 29996,
+    "edges_mention_level": 35758,
+    "cited_nodes": 11662,
+    "share_of_cited_with_>=3_citing": 0.2906,
+    "nodes_with_>=3_citing": 3389,
+    "share_of_corpus_with_>=3_citing": 0.0365,
+    "max_in_degree": 93,
+    "mean_in_degree_of_cited": 2.572,
+    "in_degree_histogram": {
+      "1": 5848,
+      "2": 2425,
+      "3": 1175,
+      "4": 711,
+      "5": 440,
+      "6": 290,
+      "7": 191,
+      "8": 134,
+      "9": 83,
+      "10": 72,
+      "11": 53,
+      "12": 42,
+      "13": 21,
+      "14": 22,
+      "15": 27,
+      "16": 22,
+      "17": 16,
+      "18": 11,
+      "19": 16,
+      "20": 6,
+      "21": 4,
+      "22": 13,
+      "23": 5,
+      "24": 2,
+      "25": 2,
+      "26": 1,
+      "27": 2,
+      "28": 3,
+      "29": 2,
+      "30": 1,
+      "31": 1,
+      "32": 2,
+      "33": 2,
+      "34": 2,
+      "35": 3,
+      "36": 2,
+      "37": 2,
+      "39": 1,
+      "46": 1,
+      "50": 6
+    }
+  }
+}
+35758 edges -> /Users/aishwaryanachammain/Documents/nyayasethu/data/from_b/edges.csv; pagerank -> /Users/aishwaryanachammain/Documents/nyayasethu/data/from_b/pagerank.csv
+
+real	4m36.060s
+user	4m34.765s
+sys	0m0.941s
+exit 0

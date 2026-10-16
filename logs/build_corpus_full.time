@@ -1,0 +1,1 @@
+.venv/bin/python -m stage0_corpus.build_corpus > logs/build_corpus_full.out 2  2528.48s user 51.68s system 96% cpu 44:30.83 total

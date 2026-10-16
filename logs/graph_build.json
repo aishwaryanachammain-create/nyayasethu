@@ -1,0 +1,166 @@
+{
+  "metadata_nodes": 38152,
+  "corpus_docs": 7949,
+  "citing_docs_with_edges": 5160,
+  "front_matter_sentences_skipped": 274631,
+  "mentions": 108653,
+  "mentions_resolved": 37321,
+  "resolution_rate_all_mentions": 0.3435,
+  "resolution_rate_reporter_citations": 0.4104,
+  "by_kind": {
+    "NAME": {
+      "mentions": 53554,
+      "unresolved:name_no_match": 30327,
+      "name_only": 14709,
+      "self_citation_dropped": 8518,
+      "resolution_rate": 0.2747
+    },
+    "SCR": {
+      "mentions": 4037,
+      "unresolved:name_no_match": 58,
+      "key_range": 171,
+      "key": 3279,
+      "name_year": 225,
+      "unresolved:no_name": 156,
+      "unresolved:cited_after_citing": 66,
+      "self_citation_dropped": 82,
+      "resolution_rate": 0.9103
+    },
+    "ILR": {
+      "mentions": 59,
+      "unresolved:no_name": 38,
+      "unresolved:name_no_match": 21,
+      "resolution_rate": 0.0
+    },
+    "SCC": {
+      "mentions": 40343,
+      "name_year": 15694,
+      "unresolved:name_no_match": 6919,
+      "unresolved:no_name": 17717,
+      "self_citation_dropped": 13,
+      "resolution_rate": 0.389
+    },
+    "AIR": {
+      "mentions": 7965,
+      "unresolved:no_name": 3787,
+      "name_year": 2427,
+      "unresolved:name_no_match": 1750,
+      "self_citation_dropped": 1,
+      "resolution_rate": 0.3047
+    },
+    "JT": {
+      "mentions": 282,
+      "unresolved:no_name": 86,
+      "unresolved:name_no_match": 101,
+      "name_year": 95,
+      "resolution_rate": 0.3369
+    },
+    "SCALE": {
+      "mentions": 140,
+      "unresolved:no_name": 70,
+      "name_year": 43,
+      "unresolved:name_no_match": 26,
+      "self_citation_dropped": 1,
+      "resolution_rate": 0.3071
+    },
+    "SCRSUPP": {
+      "mentions": 314,
+      "key": 258,
+      "name_year": 23,
+      "unresolved:no_name": 20,
+      "unresolved:name_no_match": 6,
+      "key_range": 7,
+      "resolution_rate": 0.9172
+    },
+    "CRILJ": {
+      "mentions": 265,
+      "name_year": 87,
+      "unresolved:name_no_match": 72,
+      "unresolved:no_name": 106,
+      "resolution_rate": 0.3283
+    },
+    "MANU": {
+      "mentions": 61,
+      "unresolved:no_name": 54,
+      "unresolved:name_no_match": 6,
+      "name_year": 1,
+      "resolution_rate": 0.0164
+    },
+    "SCCOL": {
+      "mentions": 1580,
+      "unresolved:no_name": 813,
+      "unresolved:name_no_match": 508,
+      "name_year": 255,
+      "self_citation_dropped": 4,
+      "resolution_rate": 0.1614
+    },
+    "INSC": {
+      "mentions": 49,
+      "key": 41,
+      "name_year": 4,
+      "unresolved:name_no_match": 3,
+      "unresolved:no_name": 1,
+      "resolution_rate": 0.9184
+    },
+    "NEUTRAL": {
+      "mentions": 4,
+      "name_year": 2,
+      "unresolved:no_name": 2,
+      "resolution_rate": 0.5
+    }
+  },
+  "graph": {
+    "nodes_total": 41116,
+    "nodes_in_corpus": 7949,
+    "edges_judgment_level": 29996,
+    "edges_mention_level": 35758,
+    "cited_nodes": 11662,
+    "share_of_cited_with_>=3_citing": 0.2906,
+    "nodes_with_>=3_citing": 3389,
+    "share_of_corpus_with_>=3_citing": 0.0365,
+    "max_in_degree": 93,
+    "mean_in_degree_of_cited": 2.572,
+    "in_degree_histogram": {
+      "1": 5848,
+      "2": 2425,
+      "3": 1175,
+      "4": 711,
+      "5": 440,
+      "6": 290,
+      "7": 191,
+      "8": 134,
+      "9": 83,
+      "10": 72,
+      "11": 53,
+      "12": 42,
+      "13": 21,
+      "14": 22,
+      "15": 27,
+      "16": 22,
+      "17": 16,
+      "18": 11,
+      "19": 16,
+      "20": 6,
+      "21": 4,
+      "22": 13,
+      "23": 5,
+      "24": 2,
+      "25": 2,
+      "26": 1,
+      "27": 2,
+      "28": 3,
+      "29": 2,
+      "30": 1,
+      "31": 1,
+      "32": 2,
+      "33": 2,
+      "34": 2,
+      "35": 3,
+      "36": 2,
+      "37": 2,
+      "39": 1,
+      "46": 1,
+      "50": 6
+    }
+  }
+}
