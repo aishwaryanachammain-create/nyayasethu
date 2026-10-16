@@ -1,0 +1,34 @@
+[
+  {
+    "case_id": "SC_1963_001",
+    "label": "followed",
+    "confidence": 0.82,
+    "n_citing": 4,
+    "evidence": [
+      {
+        "citing_id": "SC_2003_014",
+        "sent": "Following (1963) 3 SCR 515, actual loss must be shown before forfeiture.",
+        "treatment": "followed",
+        "weight": 1.0
+      },
+      {
+        "citing_id": "SC_2015_220",
+        "sent": "The ratio in (1963) 3 SCR 515 is distinguishable as the deposit here was nominal.",
+        "treatment": "distinguished",
+        "weight": 1.0
+      },
+      {
+        "citing_id": "HC_2019_088",
+        "sent": "Relying on AIR 1963 SC 1405, the landlord must prove loss.",
+        "treatment": "followed",
+        "weight": 1.0
+      },
+      {
+        "citing_id": "SC_2021_310",
+        "sent": "We follow the principle in (1963) 3 SCR 515.",
+        "treatment": "followed",
+        "weight": 1.0
+      }
+    ]
+  }
+]

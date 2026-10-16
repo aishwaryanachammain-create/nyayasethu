@@ -1,0 +1,57 @@
+[
+  {
+    "query_id": "q1",
+    "results": [
+      {
+        "case_id": "SC_1963_001",
+        "score": 1.0,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "SC_2003_014",
+        "score": 0.9,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "SC_2015_220",
+        "score": 0.8,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "HC_2019_088",
+        "score": 0.7,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      },
+      {
+        "case_id": "SC_2021_310",
+        "score": 0.6,
+        "matched_segments": [
+          {
+            "sent_idx": 0,
+            "role": "Facts"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,4 +1,5 @@
-# Member A — retrieval track. Python 3.10+.
+# NyayaSethu. Python 3.10+.
+# Member A — retrieval track
 numpy>=1.24
 pandas>=2.0
 pyarrow>=14
@@ -18,3 +19,14 @@ fastapi>=0.110
 uvicorn>=0.29
 httpx>=0.27
 pytest>=8.0
+# Member B — validity / summary track (exact pins added as each phase lands)
+huggingface_hub
+rank_bm25
+rapidfuzz
+rouge-score
+bert-score
+spacy
+pymupdf
+streamlit
+python-dotenv
+tqdm

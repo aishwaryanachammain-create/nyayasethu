@@ -3,13 +3,18 @@ data/raw/
 data/processed/
 data/from_b/
 models/
+outputs/
 *.faiss
+*.npy
 *.pt
 *.pkl
+*.bin
+*.safetensors
+.env
 .venv/
 venv/
 __pycache__/
 *.egg-info/
 .pytest_cache/
 .ipynb_checkpoints/
-# Committed on purpose (small hand-offs): data/judgments.jsonl, data/segments.parquet, data/validation/, logs/
+# Committed on purpose (small hand-offs): data/judgments.jsonl, data/segments.parquet, data/validation/, logs/, data/mock/

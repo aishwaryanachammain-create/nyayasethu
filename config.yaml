@@ -1,9 +1,12 @@
-# NyayaSethu — Member A (retrieval track) configuration.
+# NyayaSethu configuration (Member A retrieval track + Member B validity/summary track).
 # Every script reads this file; override any value on the command line where offered.
+
+use_mock: false                            # true: hand-off files resolve to paths.mock stand-ins
 
 paths:
   raw: data/raw
   processed: data/processed
+  mock: data/mock
   judgments: data/judgments.jsonl          # Week 2 hand-off to Member B
   segments: data/segments.parquet          # Week 4 hand-off to Member B
   validation: data/validation
@@ -11,6 +14,9 @@ paths:
   logs: logs
   pagerank: data/from_b/pagerank.csv       # Week 2 hand-off FROM Member B (optional until then)
   edges: data/from_b/edges.csv
+  retrieval: outputs/retrieval.json
+  validity: outputs/validity.json          # Member B, Stage 4
+  summary: outputs/summary.json            # Member B, Stage 5
 
 datasets:                                  # open access only: no forms, logins or gated downloads
   aila2019_zip: https://zenodo.org/records/4063986/files/AILA_2019_dataset.zip?download=1
@@ -20,6 +26,8 @@ datasets:                                  # open access only: no forms, logins 
 
 models:
   encoder: law-ai/InLegalBERT              # MIT, not gated
+  summarizer: nsi319/legal-led-base-16384  # Member B, Stage 5
+  nli: MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
 
 stage0:
   min_chars: 500                           # drop PDFs with no text layer
@@ -64,3 +72,15 @@ stage3:
   ce_batch: 8
   negatives_per_positive: 4
   alpha_grid: [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+
+stage4:                                    # Member B
+  min_citing: 3
+  overrule_conf: 0.7
+  recency_tau: 15
+  bench_cap: 2.0
+
+stage5:                                    # Member B
+  max_input: 8192
+  max_output: 512
+  nli_threshold: 0.5
+  nli_premises: 3
