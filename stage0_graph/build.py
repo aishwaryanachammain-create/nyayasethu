@@ -164,6 +164,11 @@ def plot_indegree(g, out: Path):
 def write_samples(nodes, pool, sample_edges, out: Path, seed=13, n=150):
     rng = random.Random(seed)
     out.parent.mkdir(parents=True, exist_ok=True)
+    if out.exists():                                    # never overwrite hand labels
+        with open(out, newline="", encoding="utf-8") as f:
+            if any(r.get("extraction_correct") or r.get("resolution_correct") for r in csv.DictReader(f)):
+                out = out.with_name(out.stem + "_new.csv")
+                print(f"  {out.name}: existing sample has labels, kept it")
     with open(out, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["check", "citing_id", "sent_idx", "sentence_or_context", "extracted", "kind", "party_name",

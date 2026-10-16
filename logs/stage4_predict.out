@@ -1,0 +1,12 @@
+W1017 00:31:21.090000 20205 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 7347.33it/s]
+35806 mentions in 985s -> /Users/aishwaryanachammain/Documents/nyayasethu/data/from_b/validity_preds.parquet
+pred
+followed         19639
+neutral          13168
+distinguished     2983
+overruled           16
+
+real	16m30.858s
+user	0m25.543s
+sys	0m3.020s

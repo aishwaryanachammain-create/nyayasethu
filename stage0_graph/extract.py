@@ -14,8 +14,10 @@ from typing import Iterable, List, Optional
 from stage0_corpus.citations import _canon, extract_citations
 
 _EXTRA = [
-    ("SCRSUPP", re.compile(r"[\(\[](?P<year>(?:19|20)\d{2})[\)\]]\s*Supp\.?\s*\(?(?P<vol>\d{1,2})?\)?\s*S\.?\s?C\.?\s?R\.?\s*(?P<page>\d{1,5})\b", re.I)),
-    ("SCRSUPP", re.compile(r"\b(?P<year>(?:19|20)\d{2})\s*Supp\.?\s*\(?(?P<vol>\d{1,2})?\)?\s*S\.?C\.?R\.?\s*(?P<page>\d{1,5})\b", re.I)),
+    # editorial form "[1997] 1 Suppl. SCR 87" (volume before "Suppl.")
+    ("SCRSUPP", re.compile(r"[\(\[](?P<year>(?:19|20)\d{2})[\)\]]\s*(?P<vol>\d{1,2})\s*Suppl?\.?\s*S\.?\s?C\.?\s?R\.?\s*(?P<page>\d{1,5})\b", re.I)),
+    ("SCRSUPP", re.compile(r"[\(\[](?P<year>(?:19|20)\d{2})[\)\]]\s*Suppl?\.?\s*\(?(?P<vol>\d{1,2})?\)?\s*S\.?\s?C\.?\s?R\.?\s*(?P<page>\d{1,5})\b", re.I)),
+    ("SCRSUPP", re.compile(r"\b(?P<year>(?:19|20)\d{2})\s*Suppl?\.?\s*\(?(?P<vol>\d{1,2})?\)?\s*S\.?C\.?R\.?\s*(?P<page>\d{1,5})\b", re.I)),
     ("SCR",     re.compile(r"\b(?P<year>(?:19|20)\d{2})\s*\((?P<vol>\d{1,2})\)\s*S\.?\s?C\.?\s?R\.?\s*(?P<page>\d{1,5})\b")),
 ]
 

@@ -78,6 +78,13 @@ stage4:                                    # Member B
   overrule_conf: 0.7
   recency_tau: 15
   bench_cap: 2.0
+  default_bench: 2                         # unknown bench size -> a division bench (the commonest SC bench)
+  use_editorial: true                      # aggregation prefers the SCR editors' label over the classifier
+  max_len: 256                             # classifier input: citing sentence + its +-2 context
+  epochs: 2
+  batch: 16
+  lr: 2.0e-5
+  neutral_cap: 6000                        # subsample plain references in training
 
 stage5:                                    # Member B
   max_input: 8192

@@ -1,0 +1,16 @@
+{
+  "note": "weak_test = agreement with editorial weak labels (not accuracy); gold = hand labels",
+  "weak_test": {
+    "cue_rules": 0.1707,
+    "classifier": 0.2857
+  },
+  "gold": "PENDING: 0 of 400 rows hand-labelled",
+  "validity_coverage": {
+    "cases": 11665,
+    "by_label": null,
+    "cases_with_>=min_citing": 3389,
+    "coverage_decided": 0.2777,
+    "evidence_by_source": null,
+    "settings": null
+  }
+}

@@ -10,7 +10,7 @@ resolves to its fictional stand-in in `data/mock/` (regenerate with `python scri
 | edges.csv (`edges`) | B | `citing_id, cited_id, citing_sent_idx, context` + `cite_text, method, score` |
 | pagerank.csv (`pagerank`) | B | `case_id, pagerank, in_degree, in_corpus` |
 | retrieval.json (`retrieval`) | A | `[{query_id, results: [{case_id, score, matched_segments: [{sent_idx, role}]}]}]` |
-| validity.json (`validity`) | B | `[{case_id, label, confidence, n_citing, evidence: [{citing_id, sent, treatment, weight}]}]` |
+| validity.json (`validity`) | B | `[{case_id, label, confidence, n_citing, evidence: [{citing_id, sent, treatment, weight}]}]` + `title, votes, cited_bench`; evidence also carries `confidence, source` |
 | summary.json (`summary`) | B | `[{query_id, case_id, issue, material_facts, ratio, decision, relevance_to_query, rejected: [str]}]` |
 
 **Field notes**
@@ -40,7 +40,9 @@ The citation graph also has nodes for metadata-only SC cases. Those have no text
 * Ratio of the decision
 * Ruling by Present Court
 
-**Validity labels:** followed, distinguished, overruled, doubted, insufficient_evidence.
+**Validity labels** (per case): followed, distinguished, overruled, doubted, insufficient_evidence.
+
+**Treatments** (per citing judgment, in `evidence[].treatment`): followed, distinguished, overruled, neutral (a plain reference). `evidence[].source` is `editorial` (SCR Case Law Reference) or `classifier`. `confidence` is null for insufficient_evidence.
 
 ## Change log
 
@@ -52,3 +54,4 @@ The citation graph also has nodes for metadata-only SC cases. Those have no text
   * roles: replaced the earlier role list with A's labels. The Stage 5 mapping is in `stage5_summary/`.
   * edges/pagerank live at A's paths `data/from_b/` (gitignored).
   * The full corpus is at `data/processed/judgments.jsonl`, which is not in git.
+* **2026-10-16 (Member B, Phase 2).** validity.json: added `title`, `votes`, `cited_bench`, and `confidence`/`source` per evidence item. Added the `neutral` treatment.

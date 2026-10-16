@@ -1,0 +1,77 @@
+train 9621, dev 1215, gold-pair rows excluded 456; device mps
+W1016 23:41:10.805000 19203 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 53957.37it/s]
+[transformers] [1mBertForSequenceClassification LOAD REPORT[0m from: law-ai/InLegalBERT
+Key                                        | Status     | 
+-------------------------------------------+------------+-
+cls.predictions.transform.dense.weight     | UNEXPECTED | 
+cls.predictions.decoder.weight             | UNEXPECTED | 
+cls.predictions.bias                       | UNEXPECTED | 
+cls.predictions.transform.dense.bias       | UNEXPECTED | 
+cls.predictions.decoder.bias               | UNEXPECTED | 
+cls.seq_relationship.bias                  | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED | 
+cls.seq_relationship.weight                | UNEXPECTED | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED | 
+classifier.bias                            | MISSING    | 
+classifier.weight                          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  step 100/1204 loss 1.1693 (177s)
+  step 200/1204 loss 1.3897 (518s)
+  step 300/1204 loss 1.1504 (848s)
+  step 400/1204 loss 1.1587 (1165s)
+  step 500/1204 loss 0.6461 (1573s)
+  step 600/1204 loss 1.9833 (1917s)
+  {'epoch': 1, 'dev_macro_f1_3class': 0.22585718277252229, 'dev_macro_f1_4class': 0.277208329640597, 'seconds': 1990}
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  6.80it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  6.75it/s]
+  step 700/1204 loss 1.3900 (2107s)
+  step 800/1204 loss 1.7740 (2245s)
+  step 900/1204 loss 0.7766 (2395s)
+  step 1000/1204 loss 0.7206 (2550s)
+  step 1100/1204 loss 2.1125 (2733s)
+  step 1200/1204 loss 0.9012 (2948s)
+  {'epoch': 2, 'dev_macro_f1_3class': 0.2504421190960499, 'dev_macro_f1_4class': 0.3135931210887911, 'seconds': 3003}
+Writing model shards:   0%|          | 0/1 [00:00<?, ?it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  4.44it/s]Writing model shards: 100%|██████████| 1/1 [00:00<00:00,  4.43it/s]
+{
+  "base": "law-ai/InLegalBERT",
+  "device": "mps",
+  "sources": "editorial",
+  "n_train": 9621,
+  "n_dev": 1215,
+  "train_by_class": {
+    "neutral": 5784,
+    "distinguished": 396,
+    "followed": 3428,
+    "overruled": 13
+  },
+  "class_weights": {
+    "followed": 0.7016481913652275,
+    "distinguished": 6.073863636363637,
+    "overruled": 185.01923076923077,
+    "neutral": 0.4158454356846473
+  },
+  "gold_pair_rows_excluded": 456,
+  "history": [
+    {
+      "epoch": 1,
+      "dev_macro_f1_3class": 0.22585718277252229,
+      "dev_macro_f1_4class": 0.277208329640597,
+      "seconds": 1990
+    },
+    {
+      "epoch": 2,
+      "dev_macro_f1_3class": 0.2504421190960499,
+      "dev_macro_f1_4class": 0.3135931210887911,
+      "seconds": 3003
+    }
+  ],
+  "note": "dev scores are agreement with weak (editorial) labels, not gold"
+}
+
+real	50m8.377s
+user	1m6.253s
+sys	0m37.444s
+exit 0

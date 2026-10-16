@@ -1,0 +1,54 @@
+{
+  "mentions": 35806,
+  "citing_docs_with_editorial_block": 2969,
+  "editorial_entries_joined_to_edges": 11860,
+  "editorial_labelled": 12638,
+  "editorial_by_class": {
+    "followed": 4511,
+    "distinguished": 613,
+    "overruled": 93,
+    "neutral": 7421
+  },
+  "cue_labelled": 6031,
+  "cue_by_class": {
+    "followed": 5187,
+    "distinguished": 427,
+    "overruled": 417,
+    "neutral": 0
+  },
+  "weak_labelled": 16385,
+  "weak_by_class": {
+    "followed": 7725,
+    "distinguished": 890,
+    "overruled": 349,
+    "neutral": 7421
+  },
+  "weak_by_source": {
+    "editorial": 12638,
+    "cue": 3747
+  },
+  "dropped_ambiguous_or_unlabelled": 19421,
+  "cue_agrees_with_editorial_when_both": 0.3179,
+  "n_both": 2284,
+  "weak_by_split": {
+    "dev": {
+      "followed": 765,
+      "distinguished": 86,
+      "overruled": 36,
+      "neutral": 728
+    },
+    "test": {
+      "followed": 838,
+      "distinguished": 102,
+      "overruled": 30,
+      "neutral": 819
+    },
+    "train": {
+      "followed": 6122,
+      "distinguished": 702,
+      "overruled": 283,
+      "neutral": 5874
+    }
+  }
+}
+-> /Users/aishwaryanachammain/Documents/nyayasethu/data/from_b/validity_mentions.parquet, /Users/aishwaryanachammain/Documents/nyayasethu/data/from_b/validity_nodes.parquet
