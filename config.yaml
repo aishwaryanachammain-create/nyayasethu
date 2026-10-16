@@ -1,0 +1,24 @@
+use_mock: true          # flip to false once real files exist
+
+paths:
+  raw: data/raw
+  mock: data/mock
+  models: models
+  judgments: data/judgments.jsonl
+  segments: data/segments.parquet
+  edges: data/edges.csv
+  pagerank: data/pagerank.csv
+  retrieval: outputs/retrieval.json
+  validity: outputs/validity.json
+  summary: outputs/summary.json
+
+models:
+  encoder: law-ai/InLegalBERT
+  summarizer: nsi319/legal-led-base-16384
+  nli: MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
+
+stage1: {window: 64, overlap: 16, max_len: 128}
+stage2: {chunk_tokens: 512, chunk_stride: 128, rrf_k: 60, top_k: 100}
+stage3: {top_k: 10, alpha: 0.8}
+stage4: {min_citing: 3, overrule_conf: 0.7, recency_tau: 15, bench_cap: 2.0}
+stage5: {max_input: 8192, max_output: 512, nli_threshold: 0.5, nli_premises: 3}
