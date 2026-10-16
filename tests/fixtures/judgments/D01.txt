@@ -1,0 +1,15 @@
+---
+doc_id: D01
+title: Harnam Singh v. Lakshmi Builders
+court: SC
+year: 1962
+bench_size: 3
+aliases: (1962) 3 SCR 410 ; AIR 1962 SC 901
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 12 of 1961. Bench: A. Rao, B. Menon, C. Iyer.
+[Facts] The appellant agreed to purchase a plot of land from the respondent builders and paid a sum of rupees twenty thousand as earnest money under the agreement of sale. The agreement provided that if the purchaser failed to complete the sale deed within six months the earnest money would stand forfeited. The purchaser did not pay the balance within the stipulated time and the vendor forfeited the entire deposit.
+[Issue] The question that falls for consideration is whether a vendor may forfeit the whole of the deposit stipulated in the contract without proving that he suffered any loss by reason of the breach.
+[Arguments of Petitioner] Counsel for the appellant contended that the forfeiture clause was a penalty and that the vendor had resold the plot at a higher price and suffered no loss at all.
+[Arguments of Respondent] The respondent submitted that the parties had freely agreed upon the forfeiture and the court ought not to rewrite their bargain.
+[Reasoning] Where parties have expressly agreed that a deposit shall be forfeited on default, the agreement must be given effect according to its terms. The deposit is a guarantee of performance and the party in breach cannot complain when the guarantee is enforced. We hold that the vendor is entitled to retain the whole deposit stipulated in the contract and is not required to prove actual loss.
+[Decision] The appeal is dismissed. There shall be no order as to costs.

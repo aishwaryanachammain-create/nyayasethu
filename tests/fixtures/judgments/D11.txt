@@ -1,0 +1,13 @@
+---
+doc_id: D11
+title: Orient Steel Ltd. v. Deccan Fabricators
+court: SC
+year: 2019
+bench_size: 2
+aliases: (2019) 11 SCC 250
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 3030 of 2018.
+[Facts] The buyer of steel coils paid an advance of thirty per cent and defaulted; the seller retained the advance.
+[Issue] Whether the seller can retain the advance paid under a contract of sale on default by the buyer.
+[Reasoning] With great respect, we find it difficult to agree with the breadth of the observations in Ganga Ram v. Union Traders, (1970) 2 SCC 101, in commercial contracts between equals, and we would have been inclined to overrule it. However, being a bench of two judges we are bound by the Constitution Bench decision, and the matter must await a larger bench. Bound by Ganga Ram, we hold the seller may retain only reasonable compensation.
+[Decision] The appeal is disposed of with a direction to refund seventy per cent of the advance.

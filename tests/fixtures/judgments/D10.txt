@@ -1,0 +1,13 @@
+---
+doc_id: D10
+title: Prabhakar Iyer v. Saroja Ammal
+court: SC
+year: 1994
+bench_size: 2
+aliases: (1994) 2 SCC 512
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 120 of 1993.
+[Facts] The landlady sought eviction of the tenant from residential premises on the ground that she bona fide required the premises for the occupation of her son, who had returned from abroad.
+[Issue] Whether the landlord's requirement for a family member constitutes bona fide need under the Rent Control Act.
+[Reasoning] The landlord is the best judge of her requirement and the tenant cannot dictate how the landlord should accommodate her family. The need must be genuine and not a mere desire, and the Rent Controller found it genuine on evidence.
+[Decision] The eviction order is confirmed and the tenant is granted six months to vacate.

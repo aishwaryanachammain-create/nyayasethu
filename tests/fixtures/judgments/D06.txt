@@ -1,0 +1,13 @@
+---
+doc_id: D06
+title: Shalini Housing Pvt. Ltd. v. Ashok Kumar
+court: SC
+year: 2012
+bench_size: 3
+aliases: (2012) 9 SCC 412
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 4410 of 2011.
+[Facts] A flat purchaser cancelled his booking with the developer, which forfeited twenty per cent of the sale consideration under the allotment letter.
+[Issue] Whether forfeiture of twenty per cent of the price on cancellation of a flat booking is a penalty.
+[Reasoning] The law on this subject is settled by the Constitution Bench in Ganga Ram v. Union Traders, (1970) 2 SCC 101, which we respectfully follow, and which was applied in Meera Textiles v. Coastal Shipping Co., (1985) 4 SCC 55. Forfeiture of a sum beyond reasonable earnest is a penalty and only reasonable compensation is recoverable. Ten per cent of the consideration is a reasonable measure of earnest in such transactions.
+[Decision] The developer is directed to refund the amount forfeited in excess of ten per cent.

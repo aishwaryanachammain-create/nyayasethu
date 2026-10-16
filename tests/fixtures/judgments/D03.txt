@@ -1,0 +1,13 @@
+---
+doc_id: D03
+title: Meera Textiles v. Coastal Shipping Co.
+court: SC
+year: 1985
+bench_size: 2
+aliases: (1985) 4 SCC 55
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 301 of 1984.
+[Facts] The shipping company had stipulated that freight paid in advance would be forfeited if the shipper cancelled the booking. The shipper cancelled two weeks before sailing and the company retained the full freight although the cargo space was re-let.
+[Issue] Whether a carrier may retain advance freight as liquidated damages when it has suffered no loss.
+[Reasoning] The Constitution Bench in Ganga Ram v. Union Traders, (1970) 2 SCC 101, held that a stipulated sum is recoverable only as reasonable compensation under Section 74 and that a penalty cannot be enforced. We follow Ganga Ram v. Union Traders and hold that the carrier, having re-let the space, can retain only a reasonable sum by way of compensation.
+[Decision] The appeal is partly allowed and the carrier shall refund the freight less ten per cent.

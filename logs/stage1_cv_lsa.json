@@ -1,0 +1,163 @@
+{
+  "macro_f1": 0.5281044895558241,
+  "accuracy": 0.6185501066098081,
+  "majority_baseline_accuracy": 0.3863539445628998,
+  "majority_label": "Ratio of the decision",
+  "per_class": {
+    "Facts": {
+      "precision": 0.71993052540165,
+      "recall": 0.7471834159531321,
+      "f1": 0.7333038478549314,
+      "support": 2219
+    },
+    "Ruling by Lower Court": {
+      "precision": 0.051094890510948905,
+      "recall": 0.022151898734177215,
+      "f1": 0.03090507726269316,
+      "support": 316
+    },
+    "Argument": {
+      "precision": 0.47023809523809523,
+      "recall": 0.3739644970414201,
+      "f1": 0.4166117336849044,
+      "support": 845
+    },
+    "Statute": {
+      "precision": 0.7520161290322581,
+      "recall": 0.5773993808049536,
+      "f1": 0.6532399299474606,
+      "support": 646
+    },
+    "Precedent": {
+      "precision": 0.5377176015473888,
+      "recall": 0.5681198910081744,
+      "f1": 0.5525008280887711,
+      "support": 1468
+    },
+    "Ratio of the decision": {
+      "precision": 0.6130402198351237,
+      "recall": 0.6771523178807947,
+      "f1": 0.6435033433853415,
+      "support": 3624
+    },
+    "Ruling by Present Court": {
+      "precision": 0.7339449541284404,
+      "recall": 0.6106870229007634,
+      "f1": 0.6666666666666666,
+      "support": 262
+    }
+  },
+  "confusion": {
+    "labels": [
+      "Facts",
+      "Ruling by Lower Court",
+      "Argument",
+      "Statute",
+      "Precedent",
+      "Ratio of the decision",
+      "Ruling by Present Court"
+    ],
+    "matrix": [
+      [
+        1658,
+        40,
+        135,
+        30,
+        27,
+        329,
+        0
+      ],
+      [
+        121,
+        7,
+        34,
+        0,
+        66,
+        88,
+        0
+      ],
+      [
+        205,
+        16,
+        316,
+        2,
+        22,
+        282,
+        2
+      ],
+      [
+        22,
+        5,
+        8,
+        373,
+        55,
+        183,
+        0
+      ],
+      [
+        9,
+        9,
+        11,
+        20,
+        834,
+        580,
+        5
+      ],
+      [
+        279,
+        60,
+        166,
+        71,
+        543,
+        2454,
+        51
+      ],
+      [
+        9,
+        0,
+        2,
+        0,
+        4,
+        87,
+        160
+      ]
+    ]
+  },
+  "n": 9380,
+  "macro_f1_folds": [
+    0.48718290242810325,
+    0.5228436144920429,
+    0.5699278096307765,
+    0.550518012630067,
+    0.5171946656536742
+  ],
+  "macro_f1_mean": 0.5295334009669328,
+  "macro_f1_std": 0.028504822527606936,
+  "gate": {
+    "threshold": 0.6,
+    "classes": {
+      "Issue": {
+        "recall": null,
+        "status": "not measurable: no gold examples"
+      },
+      "Ratio of the decision": {
+        "recall": 0.6772,
+        "status": "pass"
+      }
+    },
+    "passed": false
+  },
+  "features": "lsa",
+  "cv_folds": 5,
+  "n_docs": 50,
+  "labels": [
+    "Facts",
+    "Ruling by Lower Court",
+    "Argument",
+    "Statute",
+    "Precedent",
+    "Ratio of the decision",
+    "Ruling by Present Court"
+  ],
+  "seconds": 260.4
+}

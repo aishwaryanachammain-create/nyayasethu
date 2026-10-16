@@ -1,0 +1,15 @@
+---
+doc_id: D04
+title: Venkatesh v. Board of Trustees, Port Authority
+court: SC
+year: 1998
+bench_size: 2
+aliases: (1998) 6 SCC 640
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 5521 of 1997.
+[Facts] The appellant was employed as a crane operator by the Port Authority for twenty-two years. He resigned without serving the three months' notice required by his service rules. The employer withheld his entire gratuity, relying on a clause in the service regulations that gratuity shall stand forfeited where an employee leaves without notice.
+[Issue] Whether an employer can withhold the whole gratuity of an employee as a consequence of breach of the notice clause without showing that it suffered any loss.
+[Arguments of Petitioner] The appellant contended that the withholding was a penalty disproportionate to any inconvenience caused.
+[Arguments of Respondent] The Port Authority argued that the service regulations bound the employee.
+[Reasoning] A clause that deprives an employee of a sum earned by long service, merely because notice was not given, operates as a penalty and not as a genuine pre-estimate of damage. Applying the principle laid down in Ganga Ram v. Union Traders, (1970) 2 SCC 101, the employer may recover only reasonable compensation for the loss actually caused or reasonably estimated, and cannot appropriate the whole sum in terrorem. The employer here has neither alleged nor shown any loss beyond the salary for the notice period.
+[Decision] The appeal is allowed. The respondent shall pay the gratuity after deducting three months' wages in lieu of notice.

@@ -1,0 +1,14 @@
+---
+doc_id: D07
+title: Krishna Agencies v. Bharat Petro Distributors
+court: SC
+year: 2015
+bench_size: 2
+aliases: (2015) 4 SCC 136
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 999 of 2014.
+[Facts] The dealer's security deposit was forfeited by the oil company on termination of the dealership for breach of supply targets.
+[Issue] Whether a liquidated damages clause can be enforced without proof of loss.
+[Arguments of Respondent] The oil company relied upon Harnam Singh v. Lakshmi Builders, (1962) 3 SCR 410.
+[Reasoning] Reliance on Harnam Singh v. Lakshmi Builders is misplaced because that decision was overruled by the Constitution Bench in Ganga Ram v. Union Traders, (1970) 2 SCC 101. Following Ganga Ram, damages for breach are recoverable only as reasonable compensation, and where loss can be proved it must be proved. The oil company led no evidence of loss.
+[Decision] The appeal is allowed and the security deposit shall be refunded.

@@ -1,0 +1,13 @@
+---
+doc_id: D09
+title: Sunita Rao v. State Insurance Corporation
+court: SC
+year: 2001
+bench_size: 2
+aliases: (2001) 3 SCC 77
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 66 of 2000.
+[Facts] The insured's claim under a fire policy was repudiated on the ground that intimation was given after the period stipulated in the policy.
+[Issue] Whether delay in intimation of loss, by itself, defeats a genuine insurance claim.
+[Reasoning] A condition requiring prompt intimation is intended to enable the insurer to investigate. Where the insurer has in fact investigated and the claim is otherwise genuine, delay alone is not a ground for repudiation. The insurer's surveyor confirmed the loss.
+[Decision] The appeal is allowed and the insurer shall settle the claim.

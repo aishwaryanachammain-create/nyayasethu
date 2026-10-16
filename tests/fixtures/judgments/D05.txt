@@ -1,0 +1,14 @@
+---
+doc_id: D05
+title: Northern Rail Contractors v. State of Rajputana
+court: SC
+year: 2005
+bench_size: 2
+aliases: (2005) 7 SCC 300
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Civil Appeal No. 880 of 2004.
+[Facts] The appellant was the highest bidder at a public auction of mining leases and deposited earnest money of five per cent of the bid as required by the tender conditions. It failed to pay the balance and the State forfeited the earnest money and re-auctioned the lease.
+[Issue] Whether the State may forfeit earnest money deposited at a public auction without proof of loss.
+[Arguments of Petitioner] Reliance was placed on Ganga Ram v. Union Traders, (1970) 2 SCC 101, to contend that no sum could be retained without proof of loss.
+[Reasoning] Ganga Ram v. Union Traders is distinguishable on facts. That case concerned an advance far in excess of reasonable earnest in a private sale; the present case concerns a modest earnest deposit fixed by public tender conditions whose very object is to guarantee that only serious bidders participate. The ratio of Ganga Ram itself recognises that a reasonable earnest may be forfeited. The principle therefore does not assist the appellant.
+[Decision] The appeal is dismissed and the forfeiture is upheld.

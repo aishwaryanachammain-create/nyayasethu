@@ -1,0 +1,15 @@
+# Large or regenerable data stays out of git (download / rebuild with the scripts)
+data/raw/
+data/processed/
+data/from_b/
+models/
+*.faiss
+*.pt
+*.pkl
+.venv/
+venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+# Committed on purpose (small hand-offs): data/judgments.jsonl, data/segments.parquet, data/validation/, logs/

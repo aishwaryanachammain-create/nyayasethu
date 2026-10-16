@@ -1,0 +1,40 @@
+{
+  "judgments": 50,
+  "by_source": {
+    "Bhattacharya2019": 50
+  },
+  "duplicates_removed": {
+    "case_id": 0,
+    "title+date": 0
+  },
+  "sentences": 9380,
+  "metadata_coverage": {
+    "court": {
+      "metadata": 1.0,
+      "regex": 0.0,
+      "missing": 0.0,
+      "found": 1.0
+    },
+    "date": {
+      "metadata": 1.0,
+      "regex": 0.0,
+      "missing": 0.0,
+      "found": 1.0
+    },
+    "bench_size": {
+      "metadata": 0.0,
+      "regex": 0.38,
+      "missing": 0.62,
+      "found": 0.38
+    }
+  },
+  "citation_graph": {
+    "nodes": 50,
+    "edges": 0,
+    "mentions": 0,
+    "mean_in_degree": 0.0,
+    "max_in_degree": 0,
+    "share_cited_at_least_once": 0.0,
+    "share_with_>=3_citing": 0.0
+  }
+}

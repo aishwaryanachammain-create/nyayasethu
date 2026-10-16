@@ -1,0 +1,66 @@
+# NyayaSethu — Member A (retrieval track) configuration.
+# Every script reads this file; override any value on the command line where offered.
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  judgments: data/judgments.jsonl          # Week 2 hand-off to Member B
+  segments: data/segments.parquet          # Week 4 hand-off to Member B
+  validation: data/validation
+  models: models
+  logs: logs
+  pagerank: data/from_b/pagerank.csv       # Week 2 hand-off FROM Member B (optional until then)
+  edges: data/from_b/edges.csv
+
+datasets:                                  # open access only: no forms, logins or gated downloads
+  aila2019_zip: https://zenodo.org/records/4063986/files/AILA_2019_dataset.zip?download=1
+  bhattacharya2019_zip: https://codeload.github.com/Law-AI/semantic-segmentation/zip/refs/heads/master
+  sc_bucket: https://indian-supreme-court-judgments.s3.amazonaws.com
+  sc_years: [2018, 2019, 2020, 2021, 2022, 2023]
+
+models:
+  encoder: law-ai/InLegalBERT              # MIT, not gated
+
+stage0:
+  min_chars: 500                           # drop PDFs with no text layer
+  splitter_sample_sentences: 200
+
+stage1:
+  # Label space = Bhattacharya et al. (2019) roles + Issue from our own annotation (if present).
+  labels: [Facts, Ruling by Lower Court, Issue, Argument, Statute, Precedent, Ratio of the decision, Ruling by Present Court]
+  embed_max_len: 128
+  embed_batch: 256
+  features: inlegalbert                    # inlegalbert (Kaggle/GPU) | lsa (offline CPU fallback)
+  lstm_layers: 2
+  lstm_hidden: 256
+  dropout: 0.3
+  window: 64
+  overlap: 16
+  ce_weight: 0.5                           # loss = crf_nll + ce_weight * class-weighted CE
+  lr: 0.001
+  epochs: 60
+  patience: 8                              # early stopping on validation macro-F1
+  gate_recall: 0.6                         # gate classes must reach this recall before Stage 2
+  gate_classes: [Issue, Ratio of the decision]
+
+stage2:
+  # partitions are built from Stage-1 roles
+  facts_roles: [Facts, Ruling by Lower Court]
+  reasoning_roles: [Issue, Ratio of the decision, Precedent, Statute]
+  bm25_k1: 1.2
+  bm25_b: 0.75
+  chunk_tokens: 512
+  chunk_stride: 128
+  rrf_k: 60
+  depth: 100
+  biencoder_epochs: 1
+  biencoder_batch: 16
+  hard_negatives: 3
+
+stage3:
+  top_k: 10
+  max_len: 512
+  ce_epochs: 1
+  ce_batch: 8
+  negatives_per_positive: 4
+  alpha_grid: [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]

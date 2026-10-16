@@ -1,0 +1,15 @@
+---
+doc_id: D02
+title: Ganga Ram v. Union Traders
+court: SC
+year: 1970
+bench_size: 5
+aliases: (1970) 2 SCC 101 ; AIR 1970 SC 1220
+---
+[None] IN THE SUPREME COURT OF INDIA (FICTIONAL DEMO). Constitution Bench. Civil Appeal No. 77 of 1968.
+[Facts] The appellant entered into a contract to buy goods from the respondent and paid an advance of one lakh rupees, a sum far exceeding the customary earnest. Upon the appellant's default the respondent retained the entire advance and refused to refund any part of it. The trial court decreed refund and the High Court reversed.
+[Issue] The question for determination is whether a party who stipulates that a sum paid shall be forfeited on breach may retain the amount without establishing any loss, and how Section 74 of the Contract Act governs such a stipulation.
+[Arguments of Petitioner] It was urged for the appellant that the stipulation was by way of penalty and the respondent had not alleged any loss.
+[Arguments of Respondent] The respondent relied on Harnam Singh v. Lakshmi Builders, (1962) 3 SCR 410, which holds that the deposit may be retained in full.
+[Reasoning] Section 74 of the Contract Act dispenses with proof of actual loss only to the extent that the court may award reasonable compensation not exceeding the amount named in the contract. A stipulation for forfeiture of a sum which is not a reasonable earnest is in the nature of a penalty, and the party complaining of breach can recover only reasonable compensation. Where loss is capable of proof, the party claiming it must prove it; where loss is incapable of proof, the court may award reasonable compensation. The view taken in Harnam Singh v. Lakshmi Builders, (1962) 3 SCR 410, that a deposit may be retained in full without any proof of loss does not lay down the correct law and is overruled. A genuine earnest money deposit of a reasonable amount may be forfeited, but any sum beyond it must be refunded unless loss is shown.
+[Decision] The appeal is allowed and the respondent is directed to refund the advance after deducting reasonable earnest money.

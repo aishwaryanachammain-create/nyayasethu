@@ -1,0 +1,13 @@
+---
+doc_id: D08
+title: Lata Devi v. Municipal Corporation of Ranipur
+court: HC
+year: 2009
+bench_size: 1
+aliases: 2009 SCC OnLine Mad 1450
+---
+[None] IN THE HIGH COURT OF JUDICATURE AT MADRAS (FICTIONAL DEMO). Second Appeal No. 210 of 2008.
+[Facts] The tenant of a municipal shop vacated the premises before the end of the lease term. The Corporation forfeited the entire security deposit of three years' rent, relying on a clause in the lease deed.
+[Issue] Whether a landlord may forfeit the tenant's entire security deposit for premature surrender of the tenancy without proof of loss.
+[Reasoning] The principle laid down in Ganga Ram v. Union Traders, (1970) 2 SCC 101, applies with full force to a security deposit under a lease. The Corporation re-let the shop within one month. It can retain only reasonable compensation, which in the circumstances is one month's rent.
+[Decision] The second appeal is allowed in part and the balance deposit shall be refunded with interest.
