@@ -13,7 +13,7 @@ Fine-tunes `nsi319/legal-led-base-16384` on IN-Abs (7,030 Indian Supreme Court j
 Shukla et al., AACL 2022, Zenodo 10.5281/zenodo.7152317). It then scores the untuned and fine-tuned
 models on the 100 IN-Abs test documents with ROUGE-1/2/L and BERTScore.
 
-**Kaggle settings:** Accelerator **GPU T4 x1** (or P100), **Internet on**. If you use "Save Version", choose "Save & Run All".
+**Kaggle settings:** Accelerator **GPU T4 x2** (one GPU is used) or P100, **Internet on**. Both need a phone-verified Kaggle account. If you use "Save Version", choose "Save & Run All".
 
 **Settings (from the brief):**
 * fp16, gradient checkpointing
@@ -52,7 +52,16 @@ WORK.mkdir(parents=True, exist_ok=True)
 DEV = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 FP16 = DEV == "cuda"
 random.seed(SEED); torch.manual_seed(SEED)
-print(DEV, torch.__version__)"""),
+print(DEV, torch.__version__)
+import socket
+try:
+    socket.create_connection(("huggingface.co", 443), timeout=10).close()
+except OSError:
+    raise SystemExit("No internet. The model (Hugging Face) and IN-Abs (Zenodo) are downloaded at run time. "
+                     "On Kaggle: verify your phone (Settings > Phone verification), then turn Internet on "
+                     "in the right-hand panel (Session options) and restart the session.")
+if DEV != "cuda" and not SMOKE:
+    print("WARNING: no GPU. Set Accelerator to a GPU (T4) before running; on CPU this will not finish.")"""),
     ("md", "## Data: IN-Abs"),
     ("code", """DATA = WORK / "in_abs_ext"
 if not (DATA / "dataset" / "IN-Abs").exists():
