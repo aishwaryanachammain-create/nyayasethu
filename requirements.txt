@@ -29,6 +29,6 @@ rouge-score
 bert-score
 spacy
 pymupdf
-streamlit
-python-dotenv
+streamlit==1.66.0        # Phase 4: ui/app.py (st.badge needs >=1.46)
+python-dotenv==1.2.4     # Phase 4: .env for the LLM baselines
 tqdm

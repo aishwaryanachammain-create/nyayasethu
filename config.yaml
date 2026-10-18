@@ -93,6 +93,7 @@ stage5:                                    # Member B
   nli_premises: 3
   num_beams: 2
   mode: abstractive                        # abstractive (Legal-LED) | extractive (no model, fast)
+  api_mode: extractive                     # what A's /search uses for each of its top-k hits (summary/__init__.py)
   relevance_top: 8                         # Ratio/Precedent/Statute sentences kept for relevance_to_query
   # Kaggle fine-tuning (notebooks/stage5_led_finetune.ipynb)
   ft_lr: 3.0e-5

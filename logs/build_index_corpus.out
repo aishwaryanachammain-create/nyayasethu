@@ -1,0 +1,2 @@
+7949 documents indexed (facts + reasoning partitions, BM25) -> /Users/aishwaryanachammain/Documents/nyayasethu/models/index_corpus
+python -m stage2_retrieval.build_index --corpus --no-dense  43.48s user 1.01s system 98% cpu 45.053 total
