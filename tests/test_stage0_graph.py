@@ -74,3 +74,16 @@ def test_body_start_skips_front_matter():
         ["Headnote held: x.", "Case Law Reference [2011] 11 SCR 870 relied on.", "Advs. for the appearing parties.",
          "The Judgment of the Court was delivered by X, J.", "1. Body.", "2. More.", "3. End.", "4. End.", "5. End."])])
     assert body_start(d) == 3
+
+
+def test_precision_scoring_ignores_assistant_labels():
+    import pandas as pd
+    from stage0_graph.precision import score
+    df = pd.DataFrame({"check": ["extraction"] * 3 + ["resolution"] * 2, "kind": ["SCC", "NAME", "NAME", "", ""],
+                       "extraction_correct": ["yes", "no", "", "", ""], "resolution_correct": ["", "", "", "", ""],
+                       "assistant_correct": ["yes", "yes", "yes", "yes", "no"]})
+    r = score(df)
+    assert r["extraction"]["checked"] == 2 and r["extraction"]["precision"] == 0.5
+    assert r["extraction"]["reporter_citations"]["precision"] == 1.0
+    assert r["extraction"]["bare_case_names"]["precision"] == 0.0
+    assert r["resolution"].startswith("PENDING")

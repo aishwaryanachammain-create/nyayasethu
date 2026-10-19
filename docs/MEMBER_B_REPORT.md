@@ -149,8 +149,13 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
     entries sit in judgments that only report an overruling by another bench. The verdicts may still be
     right, but the bench-weighting then applies to the wrong judgment.
   * Gold evaluation is pending, so the only scores are agreement with silver labels.
-* **Graph:** about two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a
-  nearby party name, and bare names. The precision of resolution has not been hand-checked yet.
+* **Graph:**
+  * About two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a nearby
+    party name, and bare names.
+  * Precision has not been hand-checked yet. AI pre-labels, which are not a measurement, suggest reporter
+    citations are extracted reliably and bare case names are not: page headers get read as citations.
+  * About 0.9% of edges come from page headers or an editorial reference list the front-matter filter missed.
+    A fix is proposed in `eval/RESULTS_B.md` §1 but not applied.
 * **Summaries:**
   * The NLI filter rejects about 37% of generated sentences, and 14 of 25 summaries lose a whole field. Some
     rejections are real errors (wrong section number, negation flip, wrong party). Others are faithful
@@ -170,7 +175,8 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 1. Review the AI pre-labels in `eval/gold_to_label.csv` and fill `label` (guide:
    `eval/GOLD_LABELLING_GUIDE.md`), then run
    `python -m stage4_validity.evaluate` to get gold macro-F1.
-2. Check `eval/citation_precision_sample.csv` to get extraction and resolution precision.
+2. Check `eval/citation_precision_sample.csv` (AI pre-labels included; guide `eval/CITATION_CHECK_GUIDE.md`),
+   then run `python -m stage0_graph.precision`.
 3. Rate `eval/human_eval_sheet.csv` (guide: `eval/HUMAN_EVAL_GUIDE.md`), then run
    `python -m stage5_summary.eval_pairs --score ...`.
 4. Put an LLM key in `.env`, then run `python -m stage4_validity.llm_baseline` and

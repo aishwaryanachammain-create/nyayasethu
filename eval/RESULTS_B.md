@@ -22,8 +22,27 @@ Nodes also include every Supreme Court case in the AWS metadata (1950-2025), whi
 | mean in-degree of cited cases | 2.57 |
 
 In-degree distribution: `eval/figures/indegree_distribution.png`.
-Extraction and resolution precision: **PENDING** (300-row sample in `eval/citation_precision_sample.csv`,
-not yet hand-checked).
+Extraction and resolution precision: **PENDING** a human check of the 300-row sample in
+`eval/citation_precision_sample.csv` (guide `eval/CITATION_CHECK_GUIDE.md`; score with
+`python -m stage0_graph.precision`).
+
+The sample carries AI pre-labels (`assistant_correct`, never scored), so these numbers are preliminary:
+
+| check | AI pre-label "correct" |
+|---|---|
+| extraction, reporter citations | 76 / 76 |
+| extraction, bare case names | 48 / 74 |
+| resolution | 142 / 149 (1 unclear) |
+
+Most bare-name errors are running page headers (the case title printed at the top of each page) being read as
+citations. Headers of the citing judgment itself are already dropped as self-citations (8,518 mentions).
+Two kinds of leak remain in the graph, both small:
+* 197 `name_only` edges come from all-capitals names, most of them headers;
+* 137 edges sit in an SCR editorial "Case Law Reference" list that the front-matter filter missed.
+
+Together that is about 0.9% of 35,806 edges. The proposed fix is to drop all-capitals name mentions and lines
+matching "<citation> referred to/relied on Para N". It has not been applied: it would need a full graph and
+Stage 4 rebuild.
 
 ## 2. Doctrinal validity (Stage 4)
 
