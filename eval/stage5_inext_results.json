@@ -1,0 +1,144 @@
+{
+  "dataset": "IN-Ext segment-wise (A1, A2), 50 judgments",
+  "match_jaccard": 0.5,
+  "n_docs": 50,
+  "gold_roles": {
+    "facts": {
+      "field": "material_facts",
+      "coverage": 0.9956,
+      "pool_share": 0.2606,
+      "n_summaries": 99,
+      "expert_sentences_matched": "1149/1324",
+      "rouge1_f1": 0.3987,
+      "rouge2_f1": 0.3208,
+      "rougeL_f1": 0.3293
+    },
+    "analysis": {
+      "field": "ratio",
+      "coverage": 0.8608,
+      "pool_share": 0.4012,
+      "n_summaries": 100,
+      "expert_sentences_matched": "2181/2303",
+      "rouge1_f1": 0.2509,
+      "rouge2_f1": 0.1424,
+      "rougeL_f1": 0.162
+    },
+    "judgement": {
+      "field": "decision",
+      "coverage": 0.9796,
+      "pool_share": 0.0322,
+      "n_summaries": 98,
+      "expert_sentences_matched": "280/296",
+      "rouge1_f1": 0.6562,
+      "rouge2_f1": 0.6083,
+      "rougeL_f1": 0.6375
+    },
+    "argument": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "367/403"
+    },
+    "statute": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "337/421"
+    }
+  },
+  "position_fallback": {
+    "facts": {
+      "field": "material_facts",
+      "coverage": 0.9722,
+      "pool_share": 0.247,
+      "n_summaries": 99,
+      "expert_sentences_matched": "1149/1324",
+      "rouge1_f1": 0.3718,
+      "rouge2_f1": 0.2784,
+      "rougeL_f1": 0.2868
+    },
+    "analysis": {
+      "field": "ratio",
+      "coverage": 0.9546,
+      "pool_share": 0.753,
+      "n_summaries": 100,
+      "expert_sentences_matched": "2181/2303",
+      "rouge1_f1": 0.2027,
+      "rouge2_f1": 0.0834,
+      "rougeL_f1": 0.1238
+    },
+    "judgement": {
+      "field": "decision",
+      "coverage": 0.75,
+      "pool_share": 0.0313,
+      "n_summaries": 98,
+      "expert_sentences_matched": "280/296",
+      "rouge1_f1": 0.3435,
+      "rouge2_f1": 0.2295,
+      "rougeL_f1": 0.2924
+    },
+    "argument": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "367/403"
+    },
+    "statute": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "337/421"
+    }
+  },
+  "stage1_labeller_IN_SAMPLE": {
+    "facts": {
+      "field": "material_facts",
+      "coverage": 0.931,
+      "pool_share": 0.2668,
+      "n_summaries": 99,
+      "expert_sentences_matched": "1149/1324",
+      "rouge1_f1": 0.3789,
+      "rouge2_f1": 0.2865,
+      "rougeL_f1": 0.2924
+    },
+    "analysis": {
+      "field": "ratio",
+      "coverage": 0.7249,
+      "pool_share": 0.3669,
+      "n_summaries": 100,
+      "expert_sentences_matched": "2181/2303",
+      "rouge1_f1": 0.2509,
+      "rouge2_f1": 0.1513,
+      "rougeL_f1": 0.1678
+    },
+    "judgement": {
+      "field": "decision",
+      "coverage": 0.8603,
+      "pool_share": 0.0334,
+      "n_summaries": 98,
+      "expert_sentences_matched": "280/296",
+      "rouge1_f1": 0.4699,
+      "rouge2_f1": 0.395,
+      "rougeL_f1": 0.4361
+    },
+    "argument": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "367/403"
+    },
+    "statute": {
+      "field": "(none: not covered by design)",
+      "coverage": null,
+      "pool_share": null,
+      "n_summaries": 0,
+      "expert_sentences_matched": "337/421"
+    }
+  },
+  "note": "stage1_labeller_IN_SAMPLE: Member A's labeller was trained on these 50 judgments; optimistic."
+}

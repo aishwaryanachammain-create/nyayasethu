@@ -1,0 +1,29 @@
+{
+  "cases": 11665,
+  "by_label": {
+    "followed": 2991,
+    "insufficient_evidence": 8426,
+    "distinguished": 208,
+    "overruled": 40
+  },
+  "cases_with_>=min_citing": 3389,
+  "coverage_decided": 0.2777,
+  "evidence_by_source": {
+    "classifier": 18998,
+    "editorial": 11013
+  },
+  "settings": {
+    "min_citing": 3,
+    "overrule_conf": 0.7,
+    "recency_tau": 15,
+    "bench_cap": 2.0,
+    "default_bench": 2,
+    "use_editorial": true,
+    "max_len": 256,
+    "epochs": 2,
+    "batch": 16,
+    "lr": 2e-05,
+    "neutral_cap": 6000
+  }
+}
+-> /Users/aishwaryanachammain/Documents/nyayasethu/outputs/validity.json

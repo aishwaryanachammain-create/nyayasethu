@@ -1,0 +1,41 @@
+{
+  "provenance": "AI judge (Claude, the same assistant that built the pipeline; possible self-preference bias); relevance and usefulness only, faithfulness not rated; NOT a human evaluation",
+  "sheets": [
+    "ai_judge_sheet.csv"
+  ],
+  "mean": {
+    "generic/relevant": 1.72,
+    "generic/useful": 2.84,
+    "query_focused/relevant": 2.16,
+    "query_focused/useful": 2.4
+  },
+  "n": {
+    "generic/relevant": 25,
+    "generic/useful": 25,
+    "query_focused/relevant": 25,
+    "query_focused/useful": 25
+  },
+  "preferred": {
+    "generic": 14,
+    "query_focused": 8,
+    "tie": 3
+  },
+  "subset_relevant_cases": {
+    "pairs_where_case_is_relevant(max relevance>=3)": 8,
+    "mean": {
+      "rel": {
+        "generic": 2.88,
+        "query_focused": 4.0
+      },
+      "use": {
+        "generic": 3.25,
+        "query_focused": 3.0
+      }
+    },
+    "preferred": {
+      "query_focused": 4,
+      "generic": 3,
+      "tie": 1
+    }
+  }
+}

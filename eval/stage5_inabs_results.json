@@ -1,0 +1,36 @@
+{
+  "dataset": "IN-Abs test",
+  "n_docs": 100,
+  "smoke_test": false,
+  "model": "nsi319/legal-led-base-16384",
+  "settings": {
+    "max_input": 8192,
+    "max_output": 512,
+    "lr": 3e-05,
+    "epochs": 1,
+    "grad_accum": 16,
+    "batch": 1,
+    "fp16": true,
+    "grad_checkpointing": true,
+    "beams": 2,
+    "n_train": 6830
+  },
+  "val_loss_finetuned": 1.5835599792003632,
+  "untuned": {
+    "rouge1": 0.3303,
+    "rouge2": 0.1121,
+    "rougeL": 0.1738,
+    "rougeLsum": 0.2854,
+    "bertscore_f1": 0.8169,
+    "bertscore_model": "roberta-large (bert-score default for en), no baseline rescaling"
+  },
+  "finetuned": {
+    "rouge1": 0.418,
+    "rouge2": 0.2211,
+    "rougeL": 0.2338,
+    "rougeLsum": 0.3922,
+    "bertscore_f1": 0.8518,
+    "bertscore_model": "roberta-large (bert-score default for en), no baseline rescaling"
+  },
+  "note": "rougeL = sentence-agnostic LCS; rougeLsum = summary-level LCS over newline-split sentences; references longer than MAX_OUT tokens cannot be fully reproduced"
+}

@@ -10,6 +10,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Hand-off files that have a stand-in under paths.mock (see data/CONTRACT.md).
+MOCKABLE = {"judgments", "segments", "edges", "pagerank", "retrieval", "validity", "summary"}
+
 
 @functools.lru_cache(maxsize=4)
 def cfg(path: str | None = None) -> Dict[str, Any]:
@@ -19,5 +22,12 @@ def cfg(path: str | None = None) -> Dict[str, Any]:
 
 
 def path(key: str) -> Path:
-    """Resolve a paths.* entry relative to the repo root."""
-    return ROOT / cfg()["paths"][key]
+    """Resolve a paths.* entry relative to the repo root.
+
+    With `use_mock: true`, hand-off files resolve to their mock stand-in in paths.mock.
+    """
+    c = cfg()
+    p = ROOT / c["paths"][key]
+    if c.get("use_mock") and key in MOCKABLE:
+        return ROOT / c["paths"]["mock"] / p.name
+    return p

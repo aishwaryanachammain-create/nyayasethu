@@ -1,0 +1,50 @@
+{
+  "pairs": 25,
+  "queries": 5,
+  "generator": "models/legal_led_inabs",
+  "nli_model": "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
+  "threshold": 0.5,
+  "query_focused": {
+    "rejection_rate": 0.3696,
+    "kept": 278,
+    "rejected": 163,
+    "per_field": {
+      "issue": {
+        "rejection_rate": 0.3409,
+        "kept": 29,
+        "rejected": 15
+      },
+      "material_facts": {
+        "rejection_rate": 0.437,
+        "kept": 67,
+        "rejected": 52
+      },
+      "ratio": {
+        "rejection_rate": 0.4118,
+        "kept": 90,
+        "rejected": 63
+      },
+      "decision": {
+        "rejection_rate": 0.3725,
+        "kept": 32,
+        "rejected": 19
+      },
+      "relevance_to_query": {
+        "rejection_rate": 0.1892,
+        "kept": 60,
+        "rejected": 14
+      }
+    },
+    "pairs_with_an_empty_field": 14
+  },
+  "generic_whole_judgment": {
+    "rejection_rate": 0.4804,
+    "kept": 159,
+    "rejected": 147,
+    "note": "premises from the whole judgment, so this filter is more lenient than the per-field one"
+  },
+  "seconds_per_pair_mean": 58.7,
+  "roles_source": {
+    "stage1_labeller": 25
+  }
+}

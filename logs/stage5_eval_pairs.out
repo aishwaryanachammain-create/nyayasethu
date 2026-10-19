@@ -1,0 +1,143 @@
+W1019 12:18:54.134000 52538 .venv/lib/python3.11/site-packages/torch/distributed/elastic/multiprocessing/redirects.py:35] NOTE: Redirects are currently not supported in MacOs.
+Loading weights:   0%|          | 0/296 [00:00<?, ?it/s]Loading weights: 100%|██████████| 296/296 [00:00<00:00, 13976.76it/s]
+.venv/lib/python3.11/site-packages/torch/jit/_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+  warnings.warn(
+Loading weights:   0%|          | 0/202 [00:00<?, ?it/s]Loading weights: 100%|██████████| 202/202 [00:00<00:00, 9840.18it/s]
+[transformers] Input ids are automatically padded from 558 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3684 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 5936 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 202 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 413 to 1024 to be a multiple of `config.attention_window`: 1024
+q1 #1 sc:ESCR010005702019: generic 28.4s, 5-field 20.0s, rejected 4
+[transformers] Input ids are automatically padded from 519 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3289 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 67 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 378 to 1024 to be a multiple of `config.attention_window`: 1024
+q1 #2 sc:ESCR010006862021: generic 34.4s, 5-field 29.3s, rejected 5
+[transformers] Input ids are automatically padded from 405 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4323 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 6038 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 161 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 272 to 1024 to be a multiple of `config.attention_window`: 1024
+q1 #3 sc:ESCR010000762019: generic 38.2s, 5-field 24.0s, rejected 6
+[transformers] Input ids are automatically padded from 363 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2164 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 21 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 296 to 1024 to be a multiple of `config.attention_window`: 1024
+q1 #4 sc:ESCR010007832018: generic 32.5s, 5-field 25.1s, rejected 5
+[transformers] Input ids are automatically padded from 5242 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 286 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 491 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2908 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 118 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 473 to 1024 to be a multiple of `config.attention_window`: 1024
+q1 #5 sc:ESCR010007872018: generic 22.5s, 5-field 15.1s, rejected 7
+[transformers] Input ids are automatically padded from 259 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3993 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 6716 to 7168 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 178 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 309 to 1024 to be a multiple of `config.attention_window`: 1024
+q2 #1 sc:ESCR010008562019: generic 39.3s, 5-field 24.1s, rejected 4
+[transformers] Input ids are automatically padded from 7658 to 8192 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 34 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4172 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2456 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 100 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 351 to 1024 to be a multiple of `config.attention_window`: 1024
+q2 #2 sc:ESCR010002862019: generic 36.3s, 5-field 20.6s, rejected 7
+[transformers] Input ids are automatically padded from 99 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 5689 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 171 to 1024 to be a multiple of `config.attention_window`: 1024
+q2 #3 sc:ESCR010007672019: generic 38.3s, 5-field 32.9s, rejected 10
+[transformers] Input ids are automatically padded from 215 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3086 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 6900 to 7168 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 102 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 334 to 1024 to be a multiple of `config.attention_window`: 1024
+q2 #4 sc:ESCR010004932019: generic 30.8s, 5-field 20.9s, rejected 7
+[transformers] Input ids are automatically padded from 366 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3070 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 6910 to 7168 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 218 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 348 to 1024 to be a multiple of `config.attention_window`: 1024
+q2 #5 sc:ESCR010004492022: generic 32.7s, 5-field 20.5s, rejected 13
+[transformers] Input ids are automatically padded from 219 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 1799 to 2048 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 5153 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 90 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 290 to 1024 to be a multiple of `config.attention_window`: 1024
+q3 #1 sc:ESCR010001232019: generic 10.1s, 5-field 26.1s, rejected 4
+[transformers] Input ids are automatically padded from 246 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4299 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 20 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 338 to 1024 to be a multiple of `config.attention_window`: 1024
+q3 #2 sc:ESCR010006972021: generic 52.3s, 5-field 44.3s, rejected 2
+[transformers] Input ids are automatically padded from 474 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2411 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4798 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 88 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 384 to 1024 to be a multiple of `config.attention_window`: 1024
+q3 #3 sc:ESCR010002072022: generic 47.4s, 5-field 22.5s, rejected 6
+[transformers] Input ids are automatically padded from 241 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3287 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2554 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 123 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 436 to 1024 to be a multiple of `config.attention_window`: 1024
+q3 #4 sc:ESCR010009512019: generic 40.0s, 5-field 19.4s, rejected 11
+[transformers] Input ids are automatically padded from 354 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2115 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 5528 to 6144 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 145 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 513 to 1024 to be a multiple of `config.attention_window`: 1024
+q3 #5 sc:ESCR010001552019: generic 26.0s, 5-field 31.8s, rejected 8
+[transformers] Input ids are automatically padded from 212 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 300 to 1024 to be a multiple of `config.attention_window`: 1024
+q4 #1 sc:ESCR010004352018: generic 43.4s, 5-field 38.4s, rejected 5
+[transformers] Input ids are automatically padded from 155 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3171 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 54 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 217 to 1024 to be a multiple of `config.attention_window`: 1024
+q4 #2 sc:ESCR010006692021: generic 41.1s, 5-field 29.8s, rejected 9
+[transformers] Input ids are automatically padded from 4664 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4212 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 399 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 75 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 283 to 1024 to be a multiple of `config.attention_window`: 1024
+q4 #3 sc:ESCR010000922018: generic 27.3s, 5-field 14.7s, rejected 8
+[transformers] Input ids are automatically padded from 107 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 355 to 1024 to be a multiple of `config.attention_window`: 1024
+q4 #4 sc:ESCR010009932022: generic 34.8s, 5-field 29.7s, rejected 15
+[transformers] Input ids are automatically padded from 227 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4236 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3328 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 268 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 588 to 1024 to be a multiple of `config.attention_window`: 1024
+q4 #5 sc:ESCR010005822019: generic 32.8s, 5-field 20.1s, rejected 9
+[transformers] Input ids are automatically padded from 361 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3748 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3241 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 59 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 261 to 1024 to be a multiple of `config.attention_window`: 1024
+q5 #1 sc:ESCR010001032019: generic 35.1s, 5-field 19.2s, rejected 2
+[transformers] Input ids are automatically padded from 323 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 4480 to 5120 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 129 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 320 to 1024 to be a multiple of `config.attention_window`: 1024
+q5 #2 sc:ESCR010004272021: generic 36.4s, 5-field 26.7s, rejected 6
+[transformers] Input ids are automatically padded from 6707 to 7168 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 111 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 1107 to 2048 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 2136 to 3072 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 157 to 1024 to be a multiple of `config.attention_window`: 1024
+q5 #3 sc:ESCR010008682019: generic 28.9s, 5-field 13.9s, rejected 4
+[transformers] Input ids are automatically padded from 514 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 10 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 298 to 1024 to be a multiple of `config.attention_window`: 1024
+q5 #4 sc:ESCR010001642020: generic 33.6s, 5-field 28.5s, rejected 1
+[transformers] Input ids are automatically padded from 7018 to 7168 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 193 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 3324 to 4096 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 1620 to 2048 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 73 to 1024 to be a multiple of `config.attention_window`: 1024
+[transformers] Input ids are automatically padded from 803 to 1024 to be a multiple of `config.attention_window`: 1024
+q5 #5 sc:ESCR010006142019: generic 29.0s, 5-field 18.3s, rejected 5

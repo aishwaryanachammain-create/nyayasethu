@@ -1,0 +1,300 @@
+{
+  "note": "weak_test = agreement with editorial weak labels (not accuracy); gold = the `label` column of the gold file, whose provenance is in gold_provenance",
+  "gold_file": "eval/gold_to_label.csv",
+  "gold_provenance": "copied from suggested_label (SCR editorial label, else keyword-cue guess); NOT human-verified; 60 rows without a suggestion are blank and skipped",
+  "weak_test": {
+    "cue_rules": {
+      "n": 1384,
+      "macro_f1_3class": 0.1707,
+      "macro_f1_4class": 0.2992,
+      "per_class_f1": {
+        "followed": 0.2045,
+        "distinguished": 0.0723,
+        "overruled": 0.2353,
+        "neutral": 0.6847
+      },
+      "support": {
+        "followed": 498,
+        "distinguished": 63,
+        "overruled": 4,
+        "neutral": 819
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            73,
+            7,
+            2,
+            416
+          ],
+          [
+            11,
+            3,
+            0,
+            49
+          ],
+          [
+            1,
+            0,
+            2,
+            1
+          ],
+          [
+            131,
+            10,
+            9,
+            669
+          ]
+        ]
+      }
+    },
+    "classifier": {
+      "n": 1384,
+      "macro_f1_3class": 0.2857,
+      "macro_f1_4class": 0.3501,
+      "per_class_f1": {
+        "followed": 0.5886,
+        "distinguished": 0.2685,
+        "overruled": 0.0,
+        "neutral": 0.5432
+      },
+      "support": {
+        "followed": 498,
+        "distinguished": 63,
+        "overruled": 4,
+        "neutral": 819
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            362,
+            25,
+            0,
+            111
+          ],
+          [
+            6,
+            29,
+            0,
+            28
+          ],
+          [
+            1,
+            1,
+            0,
+            2
+          ],
+          [
+            363,
+            98,
+            0,
+            358
+          ]
+        ]
+      }
+    }
+  },
+  "gold": {
+    "n_labelled": 340,
+    "n_rows": 400,
+    "gold_by_class": {
+      "followed": 110,
+      "distinguished": 100,
+      "neutral": 70,
+      "overruled": 60
+    },
+    "cue_rules": {
+      "n": 340,
+      "macro_f1_3class": 0.3502,
+      "macro_f1_4class": 0.3592,
+      "per_class_f1": {
+        "followed": 0.1975,
+        "distinguished": 0.1296,
+        "overruled": 0.7234,
+        "neutral": 0.3861
+      },
+      "support": {
+        "followed": 110,
+        "distinguished": 100,
+        "overruled": 60,
+        "neutral": 70
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            16,
+            0,
+            0,
+            94
+          ],
+          [
+            21,
+            7,
+            0,
+            72
+          ],
+          [
+            7,
+            0,
+            34,
+            19
+          ],
+          [
+            8,
+            1,
+            0,
+            61
+          ]
+        ]
+      }
+    },
+    "editorial_weak_label": {
+      "n": 319,
+      "macro_f1_3class": 1.0,
+      "macro_f1_4class": 1.0,
+      "per_class_f1": {
+        "followed": 1.0,
+        "distinguished": 1.0,
+        "overruled": 1.0,
+        "neutral": 1.0
+      },
+      "support": {
+        "followed": 110,
+        "distinguished": 100,
+        "overruled": 39,
+        "neutral": 70
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            110,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            100,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            39,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            70
+          ]
+        ]
+      }
+    },
+    "classifier": {
+      "n": 340,
+      "macro_f1_3class": 0.3941,
+      "macro_f1_4class": 0.3752,
+      "per_class_f1": {
+        "followed": 0.5846,
+        "distinguished": 0.5978,
+        "overruled": 0.0,
+        "neutral": 0.3182
+      },
+      "support": {
+        "followed": 110,
+        "distinguished": 100,
+        "overruled": 60,
+        "neutral": 70
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            76,
+            9,
+            0,
+            25
+          ],
+          [
+            23,
+            55,
+            0,
+            22
+          ],
+          [
+            18,
+            11,
+            0,
+            31
+          ],
+          [
+            33,
+            9,
+            0,
+            28
+          ]
+        ]
+      }
+    }
+  },
+  "validity_coverage": {
+    "cases": 11665,
+    "by_label": {
+      "followed": 2991,
+      "insufficient_evidence": 8426,
+      "distinguished": 208,
+      "overruled": 40
+    },
+    "cases_with_>=min_citing": 3389,
+    "coverage_decided": 0.2777,
+    "evidence_by_source": {
+      "classifier": 18998,
+      "editorial": 11013
+    },
+    "settings": {
+      "min_citing": 3,
+      "overrule_conf": 0.7,
+      "recency_tau": 15,
+      "bench_cap": 2.0,
+      "default_bench": 2,
+      "use_editorial": true,
+      "max_len": 256,
+      "epochs": 2,
+      "batch": 16,
+      "lr": 2e-05,
+      "neutral_cap": 6000
+    }
+  }
+}

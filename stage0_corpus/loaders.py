@@ -124,6 +124,28 @@ def bench_from_judges(judges) -> Optional[int]:
     return len(names) or None
 
 
+# SCR reporter header, e.g. "[DIPAK MISRA, CJI, A. M. KHANWILKAR AND DR. D.Y. CHANDRACHUD, JJ.]"
+_SCR_BENCH = re.compile(r"\[([A-Z][^\[\]]{2,250}?),?\s*(?:JJ|J|CJI|C\.J\.I|CJ)\.?\s*\]")
+
+
+def bench_from_header(text: str) -> Optional[int]:
+    """Bench size from the SCR header. The metadata `judge` field usually names one judge only."""
+    m = _SCR_BENCH.search(text[:4000].replace("\n", " "))
+    if not m:
+        return None
+    parts = [p.strip(" .") for p in re.split(r",|\bAND\b", m.group(1))]
+    names = [p for p in parts if re.search(r"[A-Z]{2}", p)
+             and not re.fullmatch(r"(?:CJI|C\.?J\.?I?|JJ?|ACJI?)", p.replace(" ", ""))]
+    return len(names) or None
+
+
+def iso_date(v) -> Optional[str]:
+    """Metadata decision_date is DD-MM-YYYY; return YYYY-MM-DD."""
+    s = str(v or "").strip()[:10]
+    m = re.fullmatch(r"(\d{2})-(\d{2})-(\d{4})", s)
+    return f"{m.group(3)}-{m.group(2)}-{m.group(1)}" if m else (s or None)
+
+
 def load_sc_metadata(meta_dir: str | Path) -> Dict[str, Dict]:
     """All metadata.parquet files under meta_dir, keyed by PDF stem, cnr and case_id."""
     import pandas as pd
@@ -157,12 +179,17 @@ def load_sc_judgments(pdf_dir: str | Path, meta_dir: Optional[str | Path] = None
             cache.write_text(text, encoding="utf-8")
         if len(text) < min_chars:
             continue
-        m = meta.get(p.stem, {})
-        date = str(m.get("decision_date") or "")[:10] or None
+        # PDFs are named <path>_EN.pdf while metadata `path` is <path>
+        m = meta.get(p.stem) or meta.get(re.sub(r"_[A-Z]{2}$", "", p.stem), {})
+        date = iso_date(m.get("decision_date"))
         cit = m.get("citation")
         aliases = [c.strip() for c in re.split(r";|\|", str(cit)) if c and c.strip()] if cit else []
+        if m.get("nc_display"):
+            aliases.append(str(m["nc_display"]).strip())        # INSC neutral citation, e.g. 2018INSC696
+        judges = bench_from_judges(m.get("judge"))
+        bench = bench_from_header(text) or (judges if judges and judges > 1 else None)
         out.append(Judgment(case_id=f"sc:{m.get('cnr') or p.stem}", source="AWS-SC", court="SC", date=date,
-                            bench_size=bench_from_judges(m.get("judge")), title=str(m.get("title") or ""),
+                            bench_size=bench, title=str(m.get("title") or ""),
                             aliases=aliases, text=text))
     return out
 
