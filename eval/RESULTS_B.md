@@ -54,6 +54,19 @@ overruled; overruling verdicts come from the editorial labels. Confusion matrice
 | zero-shot LLM (`python -m stage4_validity.llm_baseline`) | **PENDING** (no API key in `.env`) |
 | Indian Kanoon sentiment labels | not run (no API access) |
 
+**Pre-annotation (not gold).** All 400 rows carry an `assistant_label` proposed by an AI assistant that read the
+sentence and context but not `suggested_label`. Counts: neutral 231, followed 139, distinguished 23, overruled 5,
+unclear 2 (137 marked low-confidence). These labels are never scored; gold stays PENDING until a person fills
+`label` (workflow in `eval/GOLD_LABELLING_GUIDE.md`). Two observations, preliminary until a person checks them:
+
+* Of the 60 rows whose SCR editorial label is "overruled", the assistant found the citing court itself
+  overruling in only 5. Most of the others quote or report an overruling by another bench, typically the
+  Constitution Bench in *Indore Development Authority* overruling *Pune Municipal Corporation*. The cited case
+  is still overruled, so the validity verdict can be right. But the overruling judgment is often not the one
+  whose bench size Stage 4 weighs.
+* Two rows are extraction errors: g135 resolves a running page header, and g329 takes its citation from the
+  SCR editors' Case Law Reference list, which the front-matter filter missed.
+
 ### 2.4 Coverage of the verdicts (`logs/stage4_aggregate.json`)
 
 | | cases | share |

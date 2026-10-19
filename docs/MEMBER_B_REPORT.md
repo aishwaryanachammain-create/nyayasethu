@@ -145,6 +145,9 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
   * The classifier is weak (dev 3-class macro-F1 0.25) and cannot recognise overruling. Overruled verdicts
     depend on the editors' labels.
   * Bench sizes are often unknown.
+  * The AI pre-annotation (not gold; see `eval/RESULTS_B.md` §2.3) suggests that many editorial "overruled"
+    entries sit in judgments that only report an overruling by another bench. The verdicts may still be
+    right, but the bench-weighting then applies to the wrong judgment.
   * Gold evaluation is pending, so the only scores are agreement with silver labels.
 * **Graph:** about two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a
   nearby party name, and bare names. The precision of resolution has not been hand-checked yet.
@@ -164,7 +167,8 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 
 ## 6. Still to do (needs a person or a key)
 
-1. Hand-label `eval/gold_to_label.csv` (guide: `eval/GOLD_LABELLING_GUIDE.md`), then run
+1. Review the AI pre-labels in `eval/gold_to_label.csv` and fill `label` (guide:
+   `eval/GOLD_LABELLING_GUIDE.md`), then run
    `python -m stage4_validity.evaluate` to get gold macro-F1.
 2. Check `eval/citation_precision_sample.csv` to get extraction and resolution precision.
 3. Rate `eval/human_eval_sheet.csv` (guide: `eval/HUMAN_EVAL_GUIDE.md`), then run
