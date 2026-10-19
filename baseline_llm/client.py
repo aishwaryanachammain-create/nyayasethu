@@ -48,11 +48,11 @@ def call(prompt: str, provider: str, model: str, client: httpx.Client, max_token
 
 
 def call_with_retry(prompt: str, provider: str, model: str, client: httpx.Client, max_tokens: int = 1000,
-                    tries: int = 4) -> str:
+                    tries: int = 12) -> str:
     for attempt in range(tries):
         try:
             return call(prompt, provider, model, client, max_tokens)
         except httpx.HTTPError:
             if attempt == tries - 1:
                 raise
-            time.sleep(2 ** attempt * 5)
+            time.sleep(30)
