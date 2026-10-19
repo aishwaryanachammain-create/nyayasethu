@@ -31,7 +31,7 @@ def settings() -> Tuple[str, str]:
     return provider, os.environ.get("LLM_MODEL", DEFAULT_MODEL.get(provider, DEFAULT_MODEL["openai"]))
 
 
-def call(prompt: str, provider: str, model: str, client: httpx.Client, max_tokens: int = 50) -> str:
+def call(prompt: str, provider: str, model: str, client: httpx.Client, max_tokens: int = 1000) -> str:
     if provider == "anthropic":
         r = client.post("https://api.anthropic.com/v1/messages",
                         headers={"x-api-key": os.environ["ANTHROPIC_API_KEY"], "anthropic-version": "2023-06-01"},
@@ -47,7 +47,7 @@ def call(prompt: str, provider: str, model: str, client: httpx.Client, max_token
     return r.json()["choices"][0]["message"]["content"]
 
 
-def call_with_retry(prompt: str, provider: str, model: str, client: httpx.Client, max_tokens: int = 50,
+def call_with_retry(prompt: str, provider: str, model: str, client: httpx.Client, max_tokens: int = 1000,
                     tries: int = 4) -> str:
     for attempt in range(tries):
         try:
