@@ -19,3 +19,5 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 # Committed on purpose (small hand-offs): data/judgments.jsonl, data/segments.parquet, data/validation/, logs/, data/mock/
+.DS_Store
+eval/backup_*/
