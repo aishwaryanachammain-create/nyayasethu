@@ -36,6 +36,11 @@ def field_input(field: str, sources: List[str], query: str = "") -> str:
     return f"Query: {query} || {body}" if field == "relevance_to_query" and query else body
 
 
+def strip_echo(text: str) -> str:
+    """The model sometimes copies the "Query: ... ||" input prefix into its output; drop it."""
+    return text.split("||", 1)[1].strip() if "||" in text else text
+
+
 class ExtractiveGenerator:
     name = "extractive"
 
@@ -72,7 +77,7 @@ class LEDGenerator:
             out = self.model.generate(**enc, global_attention_mask=gam, max_new_tokens=MAX_NEW[field],
                                       num_beams=self.num_beams, no_repeat_ngram_size=3, length_penalty=1.0,
                                       early_stopping=True)
-        return self.tok.decode(out[0], skip_special_tokens=True).strip()
+        return strip_echo(self.tok.decode(out[0], skip_special_tokens=True).strip())
 
 
 def make_generator(mode: str = "abstractive", model: Optional[str] = None):

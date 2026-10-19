@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from stage5_summary.fields import FIELDS, field_sources
-from stage5_summary.generate import ExtractiveGenerator, field_input
+from stage5_summary.generate import ExtractiveGenerator, field_input, strip_echo
 from stage5_summary.nli import filter_text
 
 REPO = Path(__file__).resolve().parents[1]
@@ -36,6 +36,8 @@ def test_field_mapping_and_fallbacks():
 def test_query_conditioning_and_extractive():
     assert field_input("relevance_to_query", ["a."], "q").startswith("Query: q || ")
     assert field_input("ratio", ["a."], "q") == "a."
+    assert strip_echo("Was natural justice violated? || The lessee was not heard.") == "The lessee was not heard."
+    assert strip_echo("The lessee was not heard.") == "The lessee was not heard."
     g = ExtractiveGenerator()
     assert g.generate("decision", ["The appeal is allowed.", "No costs."]) == "The appeal is allowed. No costs."
 
