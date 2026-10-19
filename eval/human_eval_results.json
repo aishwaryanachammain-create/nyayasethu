@@ -1,0 +1,28 @@
+{
+  "provenance": "human raters",
+  "sheets": [
+    "human_eval_sheet_rater1.csv",
+    "human_eval_sheet_rater2.csv"
+  ],
+  "mean": {
+    "generic/faithful": 3.8,
+    "generic/relevant": 1.24,
+    "generic/useful": 2.22,
+    "query_focused/faithful": 3.64,
+    "query_focused/relevant": 1.32,
+    "query_focused/useful": 2.24
+  },
+  "n": {
+    "generic/faithful": 50,
+    "generic/relevant": 50,
+    "generic/useful": 50,
+    "query_focused/faithful": 50,
+    "query_focused/relevant": 50,
+    "query_focused/useful": 50
+  },
+  "preferred": {
+    "generic": 29,
+    "query_focused": 18,
+    "tie": 3
+  }
+}

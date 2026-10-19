@@ -1,32 +1,23 @@
 {
-  "provenance": "extraction_correct / resolution_correct filled from AI checks (Claude), not checked by a person; r279 left blank (unverifiable) and skipped",
+  "provenance": "extraction_correct checked by a human on 30 of 150 sampled rows; resolution_correct not checked",
   "extraction": {
-    "checked": 150,
+    "checked": 30,
     "of": 150,
-    "correct": 124,
-    "precision": 0.8267,
+    "correct": 25,
+    "precision": 0.8333,
     "ci95": [
-      0.7581,
-      0.8789
+      0.6644,
+      0.9266
     ],
     "reporter_citations": {
-      "checked": 76,
+      "checked": 17,
       "precision": 1.0
     },
     "bare_case_names": {
-      "checked": 74,
-      "precision": 0.6486
+      "checked": 13,
+      "precision": 0.6154
     }
   },
-  "resolution": {
-    "checked": 149,
-    "of": 150,
-    "correct": 142,
-    "precision": 0.953,
-    "ci95": [
-      0.9062,
-      0.9771
-    ]
-  },
+  "resolution": "PENDING: 0 of 150 rows checked",
   "note": "blank cells are skipped"
 }
