@@ -22,17 +22,19 @@ Nodes also include every Supreme Court case in the AWS metadata (1950-2025), whi
 | mean in-degree of cited cases | 2.57 |
 
 In-degree distribution: `eval/figures/indegree_distribution.png`.
-Extraction and resolution precision: **PENDING** a human check of the 300-row sample in
-`eval/citation_precision_sample.csv` (guide `eval/CITATION_CHECK_GUIDE.md`; score with
-`python -m stage0_graph.precision`).
+**Extraction and resolution precision: AI-checked sample, not a human check.** The `extraction_correct` and
+`resolution_correct` columns of `eval/citation_precision_sample.csv` were filled from AI checks (Claude), not
+by a person. Row r279 was left blank (unverifiable) and is skipped. Source: `eval/graph_precision.json`, which
+records this provenance (`python -m stage0_graph.precision`).
 
-The sample carries AI pre-labels (`assistant_correct`, never scored), so these numbers are preliminary:
+| check | correct / checked | precision | 95% interval (Wilson) |
+|---|---|---|---|
+| extraction, all | 124 / 150 | 0.827 | 0.758 to 0.879 |
+| extraction, reporter citations | 76 / 76 | 1.000 | |
+| extraction, bare case names | 48 / 74 | 0.649 | |
+| resolution | 142 / 149 | 0.953 | 0.906 to 0.977 |
 
-| check | AI pre-label "correct" |
-|---|---|
-| extraction, reporter citations | 76 / 76 |
-| extraction, bare case names | 48 / 74 |
-| resolution | 142 / 149 (1 unclear) |
+A human check of the same sample is still **PENDING** (guide `eval/CITATION_CHECK_GUIDE.md`).
 
 Most bare-name errors are running page headers (the case title printed at the top of each page) being read as
 citations. Headers of the citing judgment itself are already dropped as self-citations (8,518 mentions).
@@ -64,25 +66,47 @@ distinguished 613, overruled 93, neutral (referred to) 7,421. The keyword (cue) 
 The classifier saw only 13 overruled training examples (`logs/stage4_train.json`), so it never predicts
 overruled; overruling verdicts come from the editorial labels. Confusion matrices: `eval/figures/stage4_confusion_*.png`.
 
-### 2.3 Against hand-labelled gold
+### 2.3 Against the 400-row gold sample (no human labels yet)
 
-| model | macro-F1 (3 classes) |
-|---|---|
-| keyword rules | **PENDING** (0 of 400 rows in `eval/gold_to_label.csv` labelled) |
-| InLegalBERT classifier | **PENDING** |
-| zero-shot LLM (`python -m stage4_validity.llm_baseline`) | **PENDING** (no API key in `.env`) |
-| Indian Kanoon sentiment labels | not run (no API access) |
+Two label sets were scored. **Neither is human-annotated or manually verified.**
 
-**Pre-annotation (not gold).** All 400 rows carry an `assistant_label` proposed by an AI assistant that read the
-sentence and context but not `suggested_label`. Counts: neutral 231, followed 139, distinguished 23, overruled 5,
-unclear 2 (137 marked low-confidence). These labels are never scored; gold stays PENDING until a person fills
-`label` (workflow in `eval/GOLD_LABELLING_GUIDE.md`). Two observations, preliminary until a person checks them:
+* **Run 1, copied suggestions** (`eval/stage4_results.json`). The `label` column was filled by copying
+  `suggested_label` (the SCR editors' label, else the keyword-cue guess). 340 rows; 60 rows with no
+  suggestion are blank and skipped. Classes: followed 110, distinguished 100, overruled 60, neutral 70.
+* **Run 2, AI review** (`eval/stage4_results_ai_review_gold.json`). `assistant_label` was scored as gold from
+  a scratch copy; `eval/gold_to_label.csv` was not modified. Claude labelled each row from the sentence and
+  context without reading `suggested_label`. 398 rows; 2 "unclear" rows skipped. Classes: neutral 230,
+  followed 140, distinguished 21, overruled 7.
+  * Three rows (g096, g364, g374) carry a "2nd review" note and differ from the first AI pass.
 
-* Of the 60 rows whose SCR editorial label is "overruled", the assistant found the citing court itself
-  overruling in only 5. Most of the others quote or report an overruling by another bench, typically the
-  Constitution Bench in *Indore Development Authority* overruling *Pune Municipal Corporation*. The cited case
-  is still overruled, so the validity verdict can be right. But the overruling judgment is often not the one
-  whose bench size Stage 4 weighs.
+| system | Run 1: copied suggestions, macro-F1 3-class (4-class) | Run 2: AI review, macro-F1 3-class (4-class) |
+|---|---|---|
+| keyword rules | 0.350 (0.359) | 0.225 (0.327) |
+| InLegalBERT classifier | 0.394 (0.375) | 0.345 (0.401) |
+| SCR editorial label itself | 1.000 (1.000), n=319 | 0.402 (0.387), n=318 |
+| zero-shot LLM | PENDING (no API key) | PENDING (no API key) |
+| Indian Kanoon sentiment | not run (no API access) | not run |
+
+Per-class F1 of the classifier: overruled 0.0 in both runs. Followed is 0.585 in Run 1 and 0.692 in Run 2;
+distinguished is 0.598 in Run 1 and 0.343 in Run 2.
+
+**How to read this.**
+* **Run 1 is circular.** Its "gold" is the weak labels themselves: the editorial label scores 1.0 against
+  itself, and the keyword rules get overruled F1 0.72 partly because 21 suggestions are the cue output. The
+  classifier was also trained on editorial labels. Run 1 therefore measures agreement with the training
+  signal, not accuracy.
+* **Run 2 uses independent labels, but they are AI labels.** On them the editorial labels agree only 0.40
+  (3-class macro-F1). Most of the 60 editorial "overruled" rows report an overruling by another bench (see
+  below).
+* **Human-verified gold remains PENDING.** Workflow: `eval/GOLD_LABELLING_GUIDE.md`.
+
+Observations from the AI review (not human-verified):
+
+* Of the 60 rows whose SCR editorial label is "overruled", the AI review found the citing court itself
+  overruling in only a handful. Most of the others quote or report an overruling by another bench, typically
+  the Constitution Bench in *Indore Development Authority* overruling *Pune Municipal Corporation*. The cited
+  case is still overruled, so the validity verdict can be right. But the overruling judgment is often not the
+  one whose bench size Stage 4 weighs.
 * Two rows are extraction errors: g135 resolves a running page header, and g329 takes its citation from the
   SCR editors' Case Law Reference list, which the front-matter filter missed.
 
@@ -169,9 +193,30 @@ and re-run; the table is the fixed run. The other four fields were identical in 
 
 ### 3.4 Human evaluation: generic vs query-focused
 
-**PENDING.** The sheet `eval/human_eval_sheet.csv` has 25 blinded pairs, and the key is in
-`eval/human_eval_key.csv`. Instructions: `eval/HUMAN_EVAL_GUIDE.md`. Score with
-`python -m stage5_summary.eval_pairs --score <filled sheets>`.
+**Human evaluation: PENDING.** `eval/human_eval_sheet_rater1.csv` and `_rater2.csv` are in the repo but
+blank, and they were not scored. Instructions: `eval/HUMAN_EVAL_GUIDE.md`.
+
+**AI-judge stand-in, NOT a human evaluation** (`eval/ai_judge_sheet.csv`, `eval/ai_judge_results.json`).
+* **Rater and bias:** Claude rated the 25 blinded pairs. It is the same assistant that built the pipeline, so
+  self-preference bias is possible.
+* **Blinding:** the 5-field format reveals which summary is query-focused.
+* **Scope:** relevance and usefulness only. Faithfulness was not rated because the full judgments were not
+  read; §3.3 covers it automatically.
+
+| | query-focused | generic |
+|---|---|---|
+| all 25 pairs: relevance (1-5) | 2.16 | 1.72 |
+| all 25 pairs: usefulness (1-5) | 2.40 | 2.84 |
+| all 25 pairs: preferred | 8 | 14 (3 ties) |
+| 8 pairs where the retrieved case is relevant: relevance | 4.00 | 2.88 |
+| 8 pairs where the retrieved case is relevant: usefulness | 3.00 | 3.25 |
+| 8 pairs where the retrieved case is relevant: preferred | 4 | 3 (1 tie) |
+
+* **When the retrieved case is relevant**, the query-focused summary was judged more relevant and preferred
+  slightly more often.
+* **Overall, the generic summary is preferred.** In 17 of 25 pairs the retrieved case is off-topic: no
+  cross-encoder, and the corpus is limited to 2018-2023. There, the 5-field summary is often fragmentary
+  (fields cut off, or emptied by the NLI filter), while the generic summary reads better.
 
 ## 4. End-to-end
 

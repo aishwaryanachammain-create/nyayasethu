@@ -102,12 +102,24 @@ on branch `member-b`, one commit per phase.
   * 108,706 citation mentions, 34.4% resolved (SCR 91%, SCC 39%);
   * 30,011 judgment-level edges;
   * 3,389 cases with at least 3 citing judgments.
+  * Precision on a 300-row sample checked by AI (Claude), **not by a person**:
+    * extraction 0.83 (reporter citations 1.00, bare case names 0.65);
+    * resolution 0.95 (95% interval 0.91 to 0.98).
+    
+    A human check is pending.
 * **Validity:**
   * 27.8% of cited cases get a verdict (followed 2,991, distinguished 208, overruled 40); the rest are
     insufficient evidence.
   * Against held-out editorial labels (agreement, not gold), the classifier reaches 3-class macro-F1 0.286
     vs 0.171 for the keyword rules.
-  * Gold macro-F1 is PENDING (400 contexts exported, unlabelled).
+  * On the 400-row gold sample, two label sets were scored. **Neither is human-annotated.**
+    * **Copied suggestions** (the `label` column copied from the editorial/keyword `suggested_label`; 340
+      rows). This run is circular: the editorial label scores 1.0 against itself. Classifier 3-class
+      macro-F1 0.394, keyword rules 0.350.
+    * **AI review** (Claude's `assistant_label`; 398 rows). Classifier 0.345, keyword rules 0.225, editorial
+      label 0.402.
+    
+    Human-verified gold is pending.
 * **Summaries:**
   * IN-Abs test, untuned → fine-tuned: ROUGE-1 0.330 → 0.418, ROUGE-2 0.112 → 0.221, ROUGE-L 0.174 → 0.234,
     BERTScore 0.817 → 0.852.
@@ -115,7 +127,12 @@ on branch `member-b`, one commit per phase.
     text, and the facts field covers 99.6% from 26%.
   * NLI rejection: 37.0% of the generated sentences in query-focused summaries, against 48.0% of generic
     summaries' sentences.
-  * Human evaluation PENDING (sheet ready).
+  * Human evaluation is pending: the rater sheets are blank.
+  * An AI judge (Claude, the same assistant that built the pipeline, so possibly biased) rated relevance and
+    usefulness as a stand-in:
+    * Overall, generic summaries are preferred, 14 to 8.
+    * Where the retrieved case is relevant (8 pairs), query-focused summaries are more relevant (4.0 vs 2.9)
+      and preferred 4 to 3.
 * **LLM baselines:** PENDING (no API key).
 
 ## 4. Changes to Member A's files
@@ -145,15 +162,16 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
   * The classifier is weak (dev 3-class macro-F1 0.25) and cannot recognise overruling. Overruled verdicts
     depend on the editors' labels.
   * Bench sizes are often unknown.
-  * The AI pre-annotation (not gold; see `eval/RESULTS_B.md` §2.3) suggests that many editorial "overruled"
+  * The AI review (not human-verified; see `eval/RESULTS_B.md` §2.3) suggests that many editorial "overruled"
     entries sit in judgments that only report an overruling by another bench. The verdicts may still be
     right, but the bench-weighting then applies to the wrong judgment.
-  * Gold evaluation is pending, so the only scores are agreement with silver labels.
+  * No human-verified gold exists. The scores are either agreement with silver labels, circular agreement
+    with copied suggestions, or agreement with AI labels.
 * **Graph:**
   * About two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a nearby
     party name, and bare names.
-  * Precision has not been hand-checked yet. AI pre-labels, which are not a measurement, suggest reporter
-    citations are extracted reliably and bare case names are not: page headers get read as citations.
+  * Precision was checked by AI, not by a person. Reporter citations look reliable. Bare case names do not:
+    page headers get read as citations.
   * About 0.9% of edges come from page headers or an editorial reference list the front-matter filter missed.
     A fix is proposed in `eval/RESULTS_B.md` §1 but not applied.
 * **Summaries:**
@@ -166,19 +184,30 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 * **Evaluation:**
   * IN-Ext coverage measures the role pools rather than the generated text.
   * A's labeller is trained on the IN-Ext documents, so its coverage row is optimistic.
-  * The human evaluation's blinding cannot hide the 5-field format.
+  * The human evaluation has not been done. The AI-judge stand-in has the following limits:
+    * it may favour its own pipeline;
+    * it could not be blinded to the 5-field format;
+    * it did not rate faithfulness.
 * **Retrieval quality** (A's stages) caps everything downstream. Without the cross-encoder some top results
   are off-topic (e.g. a compassionate-appointment case for a gratuity query).
 
 ## 6. Still to do (needs a person or a key)
 
-1. Review the AI pre-labels in `eval/gold_to_label.csv` and fill `label` (guide:
-   `eval/GOLD_LABELLING_GUIDE.md`), then run
-   `python -m stage4_validity.evaluate` to get gold macro-F1.
-2. Check `eval/citation_precision_sample.csv` (AI pre-labels included; guide `eval/CITATION_CHECK_GUIDE.md`),
-   then run `python -m stage0_graph.precision`.
-3. Rate `eval/human_eval_sheet.csv` (guide: `eval/HUMAN_EVAL_GUIDE.md`), then run
-   `python -m stage5_summary.eval_pairs --score ...`.
+1. **Human gold labels.** The current `label` column holds copied machine suggestions. A person should
+   review each row and replace it with their own label (guide: `eval/GOLD_LABELLING_GUIDE.md`), then run:
+   ```
+   python -m stage4_validity.evaluate --provenance "<who labelled>"
+   ```
+2. **Human citation check.** The current yes/no values come from AI checks. A person should verify them
+   (guide: `eval/CITATION_CHECK_GUIDE.md`), then run:
+   ```
+   python -m stage0_graph.precision --provenance "<who checked>"
+   ```
+3. **Human ratings.** Raters fill `eval/human_eval_sheet_rater1.csv` and `_rater2.csv` (guide:
+   `eval/HUMAN_EVAL_GUIDE.md`), then run:
+   ```
+   python -m stage5_summary.eval_pairs --score eval/human_eval_sheet_rater1.csv eval/human_eval_sheet_rater2.csv
+   ```
 4. Put an LLM key in `.env`, then run `python -m stage4_validity.llm_baseline` and
    `python -m baseline_llm.run --engine --nli`.
 

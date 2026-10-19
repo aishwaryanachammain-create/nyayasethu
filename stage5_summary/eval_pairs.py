@@ -19,6 +19,7 @@ import json
 import random
 import time
 from collections import Counter, defaultdict
+from pathlib import Path
 
 from common.config import ROOT, cfg
 
@@ -125,7 +126,7 @@ def write_outputs(seed: int = 13):
     print(json.dumps(res, indent=2))
 
 
-def score_sheets(sheets) -> dict:
+def score_sheets(sheets, out=None, provenance: str = "human raters") -> dict:
     """Mean rating per system and criterion over filled cells; preference counts. Blank cells are skipped."""
     key = {r["pair_id"]: r for r in csv.DictReader(open(KEY, encoding="utf-8"))}
     vals, pref = defaultdict(list), Counter()
@@ -144,11 +145,11 @@ def score_sheets(sheets) -> dict:
                 pref["tie"] += 1
     if not vals and not pref:
         return {"status": "PENDING: no ratings filled in"}
-    res = {"sheets": [str(s) for s in sheets],
+    res = {"provenance": provenance, "sheets": [Path(s).name for s in sheets],
            "mean": {f"{sys}/{crit}": round(sum(v) / len(v), 3) for (sys, crit), v in sorted(vals.items())},
            "n": {f"{sys}/{crit}": len(v) for (sys, crit), v in sorted(vals.items())},
            "preferred": dict(pref)}
-    (ROOT / "eval" / "human_eval_results.json").write_text(json.dumps(res, indent=2))
+    Path(out or ROOT / "eval" / "human_eval_results.json").write_text(json.dumps(res, indent=2))
     return res
 
 
@@ -157,9 +158,11 @@ def main():
     p.add_argument("--per-query", type=int, default=5)
     p.add_argument("--sheet", action="store_true")
     p.add_argument("--score", nargs="+", help="filled-in copies of the sheet")
+    p.add_argument("--out", help="results file (default eval/human_eval_results.json)")
+    p.add_argument("--provenance", default="human raters", help="who filled the sheets")
     a = p.parse_args()
     if a.score:
-        print(json.dumps(score_sheets(a.score), indent=2))
+        print(json.dumps(score_sheets(a.score, a.out, a.provenance), indent=2))
     elif a.sheet:
         write_outputs()
     else:

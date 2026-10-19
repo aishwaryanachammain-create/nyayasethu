@@ -1,5 +1,9 @@
 # Labelling `eval/gold_to_label.csv` (Stage 4 gold set)
 
+> **Current state (2026-10-19):** the `label` column holds values **copied from `suggested_label`** (machine
+> suggestions), not human labels; 60 rows are blank. `assistant_label` holds an AI review. Neither is
+> human-verified. Replace `label` with your own judgement before calling any result "gold".
+
 There are 400 rows. Each row is one place where a judgment (`citing_id`) cites an earlier case (`cited_id`, `cited_title`).
 In `sentence`, the citation is marked with `[[ ]]`. `context` is the sentence with two sentences either side.
 

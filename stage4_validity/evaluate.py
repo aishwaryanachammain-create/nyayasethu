@@ -3,7 +3,8 @@
 Two clearly separated evaluations:
   1. weak_test: agreement with the SCR editors' labels on the held-out test split (by citing judgment).
      This measures agreement with a noisy weak label, NOT accuracy.
-  2. gold: macro-F1 and confusion matrices against the hand labels in eval/gold_to_label.csv. Rows whose
+  2. gold: macro-F1 and confusion matrices against the `label` column of --gold (default eval/gold_to_label.csv;
+     its provenance must be passed with --provenance). Rows whose
      `label` is blank or not one of the four classes are ignored; with no labelled rows the gold result
      is PENDING. `suggested_label` is never read as gold.
 
@@ -63,11 +64,24 @@ def plot_cm(res: Dict, title: str, dst):
 
 
 def main():
+    import argparse
+    from pathlib import Path
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--gold", default=str(GOLD), help="CSV whose `label` column is used as gold")
+    ap.add_argument("--out", default=str(ROOT / "eval" / "stage4_results.json"))
+    ap.add_argument("--provenance", default="not recorded: state where the `label` column came from",
+                    help="where the gold labels came from (stored in the output)")
+    ap.add_argument("--fig-suffix", default="")
+    a = ap.parse_args()
+    gold_p = Path(a.gold)
     FIG.mkdir(parents=True, exist_ok=True)
     preds_p = out_paths()[0].parent / "validity_preds.parquet"
     preds = pd.read_parquet(preds_p) if preds_p.exists() else None
     ed = pd.read_parquet(out_paths()[0])
-    out = {"note": "weak_test = agreement with editorial weak labels (not accuracy); gold = hand labels"}
+    out = {"note": "weak_test = agreement with editorial weak labels (not accuracy); gold = the `label` column "
+                   "of the gold file, whose provenance is in gold_provenance",
+           "gold_file": str(gold_p.resolve().relative_to(ROOT)) if gold_p.resolve().is_relative_to(ROOT) else gold_p.name,
+           "gold_provenance": a.provenance}
 
     # 1. weak test split
     t = ed[(ed.split == "test") & ed.editorial.notna()]
@@ -81,14 +95,14 @@ def main():
         plot_cm(v, f"{k} vs editorial labels (weak test, n={v['n']})", FIG / f"stage4_confusion_weak_{k}.png")
 
     # 2. gold
-    if not GOLD.exists():
+    if not gold_p.exists():
         out["gold"] = "PENDING: eval/gold_to_label.csv not exported"
     else:
-        g = pd.read_csv(GOLD, keep_default_na=False)
+        g = pd.read_csv(gold_p, keep_default_na=False)
         g["label"] = g.label.str.strip().str.lower()
         lab = g[g.label.isin(LABELS)]
         if lab.empty:
-            out["gold"] = f"PENDING: 0 of {len(g)} rows hand-labelled"
+            out["gold"] = f"PENDING: 0 of {len(g)} rows have a label"
         else:
             m = ed.set_index("mention_id")
             gd = {"n_labelled": len(lab), "n_rows": len(g), "gold_by_class": lab.label.value_counts().to_dict(),
@@ -107,12 +121,12 @@ def main():
                         "model": lp.model.iloc[0]}
             for k in ("cue_rules", "classifier", "llm_zero_shot", "editorial_weak_label"):
                 if k in gd:
-                    plot_cm(gd[k], f"{k} vs gold (n={gd[k]['n']})", FIG / f"stage4_confusion_gold_{k}.png")
+                    plot_cm(gd[k], f"{k} vs gold (n={gd[k]['n']})", FIG / f"stage4_confusion_gold_{k}{a.fig_suffix}.png")
             out["gold"] = gd
 
     agg = path("logs") / "stage4_aggregate.json"
     out["validity_coverage"] = json.loads(agg.read_text()) if agg.exists() else "PENDING: aggregate not run"
-    (ROOT / "eval" / "stage4_results.json").write_text(json.dumps(out, indent=2))
+    Path(a.out).write_text(json.dumps(out, indent=2))
     print(json.dumps({k: (v if isinstance(v, str) else {s: (r.get("macro_f1_3class") if isinstance(r, dict) else r)
                                                          for s, r in v.items()}) for k, v in out.items()}, indent=2))
 

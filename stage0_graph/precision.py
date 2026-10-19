@@ -48,7 +48,12 @@ def score(df: pd.DataFrame) -> dict:
 
 
 def main():
-    res = score(pd.read_csv(SAMPLE, keep_default_na=False, dtype=str))
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--provenance", default="not recorded: state who filled extraction_correct / resolution_correct")
+    a = ap.parse_args()
+    res = {"provenance": a.provenance, **score(pd.read_csv(SAMPLE, keep_default_na=False, dtype=str)),
+           "note": "blank cells are skipped"}
     OUT.write_text(json.dumps(res, indent=2))
     print(json.dumps(res, indent=2))
 
