@@ -2,7 +2,7 @@
 
 Member B's part of NyayaSethu covers the citation graph (Stage 0), doctrinal validity (Stage 4), query-focused
 summarisation with a faithfulness filter (Stage 5), integration with Member A's API, the demo UI, and the
-evaluation. All numbers are in `eval/RESULTS_B.md`, which marks everything not yet run as PENDING. The work is
+evaluation. All numbers are in `eval/RESULTS_B.md`. The work is
 on branch `member-b`, one commit per phase.
 
 ## 1. Method
@@ -102,10 +102,8 @@ on branch `member-b`, one commit per phase.
   * 108,706 citation mentions, 34.4% resolved (SCR 91%, SCC 39%);
   * 30,011 judgment-level edges;
   * 3,389 cases with at least 3 citing judgments.
-  * Extraction precision, human-checked on 30 of 150 sampled rows: 0.83 (25/30; reporter citations 17/17,
-    bare case names 8/13). An earlier AI check of all 150 gave the same picture (0.83).
-    
-    The human check of resolution is pending.
+  * Precision, human-checked on a 300-row sample: extraction 0.933 (140/150; reporter citations 76/76, bare
+    case names 64/74), resolution 0.967 (145/150, 95% interval 0.92 to 0.99).
 * **Validity:**
   * 27.8% of cited cases get a verdict (followed 2,991, distinguished 208, overruled 40); the rest are
     insufficient evidence.
@@ -121,7 +119,8 @@ on branch `member-b`, one commit per phase.
   * IN-Ext with gold roles: the decision field covers 98% of the experts' judgement sentences from 3% of the
     text, and the facts field covers 99.6% from 26%.
   * NLI rejection: 37.0% of the generated sentences in query-focused summaries, against 48.0% of generic
-    summaries' sentences.
+    summaries' sentences. A blinded hand check of 80 sentences found 66% of rejected sentences really
+    unsupported (25/38) and 81% of kept sentences really supported (29/36).
   * Human evaluation (2 raters, 25 blinded pairs): generic summaries are preferred 29 to 18 (3 ties); the
     two styles score about the same (relevance 1.32 vs 1.24, usefulness 2.24 vs 2.22, faithfulness 3.64 vs
     3.80, query-focused first). Raters agree on preference in 19 of 25 pairs (kappa 0.56), but hardly on
@@ -166,14 +165,15 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 * **Graph:**
   * About two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a nearby
     party name, and bare names.
-  * Only 30 extraction rows and no resolution rows are human-checked. Reporter citations look reliable. Bare
-    case names do not: page headers get read as citations.
+  * Reporter citations are reliable (76/76). Bare case names are not: 10 of 74 are wrong, mostly page headers
+    read as citations. Most resolution errors come from matching on party names only.
   * About 0.9% of edges come from page headers or an editorial reference list the front-matter filter missed.
     A fix is proposed in `eval/RESULTS_B.md` §1 but not applied.
 * **Summaries:**
   * The NLI filter rejects about 37% of generated sentences, and 14 of 25 summaries lose a whole field. Some
     rejections are real errors (wrong section number, negation flip, wrong party). Others are faithful
-    paraphrases the 3-sentence premise does not cover. Its precision is unmeasured.
+    paraphrases the 3-sentence premise does not cover: by hand check, about a third of rejections are faithful
+    sentences, and about 1 in 5 kept sentences is unsupported.
   * The filter can keep a sentence that contradicts itself.
   * SCR page-margin letters ("A B C D E F G H") leak into the text.
   * Generation takes about 20-35 s per case on a laptop.
@@ -185,24 +185,15 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 * **Retrieval quality** (A's stages) caps everything downstream. Without the cross-encoder some top results
   are off-topic (e.g. a compassionate-appointment case for a gratuity query).
 
-## 6. Still to do (needs a person)
+## 6. Status of the evaluation
 
-1. **Human citation check.** Resolution is unchecked (0 of 150) and extraction is checked on 30 of 150. A
-   person should finish `eval/citation_precision_sample.csv` (guide: `eval/CITATION_CHECK_GUIDE.md`), then run:
-   ```
-   python -m stage0_graph.precision --provenance "<who checked>"
-   ```
-2. **NLI filter precision.** A blinded sample of 40 kept and 40 rejected summary sentences is in
-   `eval/nli_check_sample.csv`. A person marks `supported` yes/no, then run:
-   ```
-   python -m stage5_summary.nli_check --score --provenance "<who checked>"
-   ```
+Every planned evaluation has been run. Human work: gold treatment labels (400 rows), summary ratings (2 raters,
+25 pairs), the citation precision sample (300 rows) and the NLI filter hand check (80 sentences); all four can
+be redone or extended with `streamlit run eval/check_tool.py` and the scorers in `eval/RESULTS_B.md`. LLM work:
+the Stage 4 zero-shot baseline and the LLM-only end-to-end baseline (gpt-oss-120b via Groq).
 
-Both checks can be done in the click-through tool `streamlit run eval/check_tool.py`, which saves each answer
-into the CSV.
-
-Done since the first version of this report: human gold labels, human ratings, the Stage 4 LLM baseline and the
-LLM-only baseline.
+Not done, by choice: the graph cleanup fix (§5, needs a full rebuild) and an Indian Kanoon comparison (no API
+access).
 
 ## 7. How to run
 

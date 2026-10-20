@@ -22,22 +22,29 @@ Nodes also include every Supreme Court case in the AWS metadata (1950-2025), whi
 | mean in-degree of cited cases | 2.57 |
 
 In-degree distribution: `eval/figures/indegree_distribution.png`.
-**Extraction precision: human check of 30 of the 150 sampled rows.** A person filled `extraction_correct` in
-`eval/citation_precision_sample.csv` for 30 rows; blank rows are skipped. Source: `eval/graph_precision.json`
-(`python -m stage0_graph.precision`).
+**Extraction and resolution precision: human check of the full 300-row sample.** People filled
+`extraction_correct` (150 rows: 30 by K Deepika, 120 by Aishwarya Nachammai N) and `resolution_correct` (150
+rows, Aishwarya Nachammai N) in `eval/citation_precision_sample.csv`, using `eval/check_tool.py` with the AI
+pre-labels hidden by default. 18 reporter citations first marked "no" were flagged as inconsistent with the
+guide (e.g. *Hanumant v. State of M.P.*, AIR 1952 SC 343) and re-checked by the same person, who changed all 18
+to "yes". Source: `eval/graph_precision.json` (`python -m stage0_graph.precision`), which records this provenance.
 
 | check | correct / checked | precision | 95% interval (Wilson) |
 |---|---|---|---|
-| extraction, all | 25 / 30 | 0.833 | 0.664 to 0.927 |
-| extraction, reporter citations | 17 / 17 | 1.000 | |
-| extraction, bare case names | 8 / 13 | 0.615 | |
-| resolution | 0 / 150 | **PENDING** | |
+| extraction, all | 140 / 150 | **0.933** | 0.882 to 0.963 |
+| extraction, reporter citations | 76 / 76 | 1.000 | |
+| extraction, bare case names | 64 / 74 | 0.865 | |
+| resolution | 145 / 150 | **0.967** | 0.924 to 0.986 |
 
-The human check of resolution, and of the other 120 extraction rows, is still **PENDING** (guide
-`eval/CITATION_CHECK_GUIDE.md`). An earlier AI check (Claude) of the full sample, superseded here, gave
-extraction 124/150 (0.827; reporter citations 76/76, bare names 48/74) and resolution 142/149 (0.953); it is in
-the git history of `eval/graph_precision.json` (commit f616bad). The human check agrees with it on the pattern:
-reporter citations are always right, bare case names often are not.
+* **Extraction errors (10, all bare case names):** 6 are all-capitals page headers or title lines read as
+  citations, 2 cut the name at the wrong party (e.g. "Lrs. v. Babu (dead)"), and 2 run on into the following
+  words ("... v. Nirmala and Another and").
+* **Resolution errors (5):** 3 come from `name_only` matching, which picks a different case between the same
+  parties (e.g. *Kishor R. Ajmera v. SEBI* resolved to *SEBI v. Kishore R. Ajmera*, 2016); 2 are reporter-key
+  matches to the wrong judgment.
+* An earlier AI check (Claude) of the same sample gave extraction 0.827 and resolution 0.953 (git history of
+  `eval/graph_precision.json`, commit f616bad). The human check agrees on the pattern and finds fewer
+  bare-name errors.
 
 Most bare-name errors are running page headers (the case title printed at the top of each page) being read as
 citations. Headers of the citing judgment itself are already dropped as self-citations (8,518 mentions).
@@ -214,8 +221,25 @@ prior; no cross-encoder). Fine-tuned Legal-LED and NLI `MoritzLaurer/DeBERTa-v3-
 proven to be a hallucination: this is the filter's rejection rate, not an error rate. Reading a sample of
 rejected sentences shows both kinds. The filter catches real errors: a wrong section number (s.15 for s.14 of
 SARFAESI), a flipped charge ("failure **not** to discharge"), and a wrong party ("respondent no. 2-bank" for
-no. 1). It also wrongly rejects near-verbatim sentences (P(entail) about 0.34). The precision of the filter
-is **PENDING** a hand check. Mean time per pair on an M-series Mac (MPS): 58.7 s for both summaries.
+no. 1). It also wrongly rejects near-verbatim sentences (P(entail) about 0.34). Mean time per pair on an
+M-series Mac (MPS): 58.7 s for both summaries.
+
+**Hand check of the filter** (`eval/nli_check_sample.csv`, `eval/nli_check_results.json`). 40 kept and 40
+rejected query-focused sentences (random, seed 13), shuffled together. Aishwarya Nachammai N marked each one
+supported or not from the judgment, without seeing the filter's decision (`eval/check_tool.py`); "can't tell"
+rows are skipped (4 kept, 2 rejected). `python -m stage5_summary.nli_check --score`.
+
+| | correct / checked | precision | 95% interval (Wilson) |
+|---|---|---|---|
+| rejected sentences that are really unsupported | 25 / 38 | 0.658 | 0.499 to 0.788 |
+| kept sentences that are really supported | 29 / 36 | 0.806 | 0.650 to 0.903 |
+
+* **The filter helps but is far from exact.** About a third of its rejections throw away faithful sentences,
+  and about 1 in 5 kept sentences is still unsupported. Since 14 of 25 summaries lose a whole field, the
+  false rejections cost the most.
+* Read with the rejection rates above: rejected sentences are unsupported about 66% of the time, kept ones
+  about 19%. The filter therefore concentrates the errors in what it removes, but a 0.5 threshold on a
+  3-sentence premise is too strict for faithful paraphrases.
 
 A first run had a bug: the model sometimes copied the `Query: ... ||` input prefix into relevance_to_query.
 The filter rejected those copies, which put that field's rejection rate at 44%. Fixed in `generate.strip_echo`

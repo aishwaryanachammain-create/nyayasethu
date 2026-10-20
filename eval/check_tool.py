@@ -78,7 +78,13 @@ rows = df.index[df.check == check].tolist() if check else df.index.tolist()
 done = [i for i in rows if df.at[i, col].strip()]
 st.sidebar.progress(len(done) / len(rows), text=f"{len(done)} / {len(rows)} answered")
 st.sidebar.caption("Blank = not answered yet. “Can't tell” saves `unsure`, which the scorers skip.")
-only_open = st.sidebar.checkbox("Skip answered rows", value=True)
+review = st.sidebar.text_area("Review only these row ids", key=f"review_{task}",
+                              help="Comma- or space-separated, e.g. r046, r047. Shows them even if answered.")
+review_ids = set(re.findall(r"[rn]\d{3}", review))
+if review_ids:
+    rows = [i for i in rows if df.at[i, "row_id"] in review_ids]
+only_open = st.sidebar.checkbox("Skip answered rows", value=not review_ids, disabled=bool(review_ids))
+only_open = only_open and not review_ids
 show_ai = task != "NLI filter" and st.sidebar.checkbox("Show AI pre-label", value=False,
                                                        help="AI hint for speed. It is never scored.")
 
@@ -119,7 +125,7 @@ else:
 note_col = "note" if task == "NLI filter" else None
 note = st.text_input("Note (optional)", value=r[note_col] if note_col else "", key=f"note_{task}_{i}") if note_col else ""
 if r[col].strip():
-    st.caption(f"Current answer: **{r[col]}**")
+    st.warning(f"Current answer: **{r[col]}**. Click again to change it, or Skip to keep it.")
 
 
 def answer(v: str):
@@ -132,11 +138,11 @@ def answer(v: str):
         st.session_state[key] = pos + 1
 
 
-c = st.columns([1, 1, 1, 1, 1])
+c = st.columns([1, 0.4, 1, 0.4, 1, 1, 1])        # spacers between the answer buttons against misclicks
 c[0].button("✅ Yes", on_click=answer, args=("yes",), use_container_width=True, type="primary")
-c[1].button("❌ No", on_click=answer, args=("no",), use_container_width=True)
-c[2].button("🤷 Can't tell", on_click=answer, args=("unsure",), use_container_width=True)
-c[3].button("◀ Back", on_click=lambda: st.session_state.update({key: max(pos - 1, 0)}), use_container_width=True,
+c[2].button("❌ No", on_click=answer, args=("no",), use_container_width=True)
+c[4].button("🤷 Can't tell", on_click=answer, args=("unsure",), use_container_width=True)
+c[5].button("◀ Back", on_click=lambda: st.session_state.update({key: max(pos - 1, 0)}), use_container_width=True,
             disabled=pos == 0)
-c[4].button("Skip ▶", on_click=lambda: st.session_state.update({key: pos + 1}), use_container_width=True,
+c[6].button("Skip ▶", on_click=lambda: st.session_state.update({key: pos + 1}), use_container_width=True,
             disabled=pos >= len(queue) - 1)

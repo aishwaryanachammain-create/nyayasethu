@@ -1,23 +1,32 @@
 {
-  "provenance": "extraction_correct checked by a human on 30 of 150 sampled rows; resolution_correct not checked",
+  "provenance": "human check: extraction rows 30 by K Deepika (commit cee7305) and 120 by Aishwarya Nachammai N; resolution rows 150 by Aishwarya Nachammai N. 18 reporter-citation rows first marked no were flagged by the assistant as inconsistent with the guide, re-checked by the same person, and changed to yes. AI pre-labels hidden by default in eval/check_tool.py and never scored",
   "extraction": {
-    "checked": 30,
+    "checked": 150,
     "of": 150,
-    "correct": 25,
-    "precision": 0.8333,
+    "correct": 140,
+    "precision": 0.9333,
     "ci95": [
-      0.6644,
-      0.9266
+      0.8816,
+      0.9634
     ],
     "reporter_citations": {
-      "checked": 17,
+      "checked": 76,
       "precision": 1.0
     },
     "bare_case_names": {
-      "checked": 13,
-      "precision": 0.6154
+      "checked": 74,
+      "precision": 0.8649
     }
   },
-  "resolution": "PENDING: 0 of 150 rows checked",
+  "resolution": {
+    "checked": 150,
+    "of": 150,
+    "correct": 145,
+    "precision": 0.9667,
+    "ci95": [
+      0.9243,
+      0.9857
+    ]
+  },
   "note": "blank cells are skipped"
 }

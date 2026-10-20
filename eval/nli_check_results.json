@@ -1,0 +1,26 @@
+{
+  "provenance": "human check by Aishwarya Nachammai N, blinded to the filter decision (eval/check_tool.py)",
+  "sample": "nli_check_sample.csv",
+  "rows": 80,
+  "rejection_precision": {
+    "checked": 38,
+    "of": 40,
+    "correct": 25,
+    "precision": 0.6579,
+    "ci95": [
+      0.4989,
+      0.7879
+    ]
+  },
+  "kept_precision": {
+    "checked": 36,
+    "of": 40,
+    "correct": 29,
+    "precision": 0.8056,
+    "ci95": [
+      0.6497,
+      0.9025
+    ]
+  },
+  "note": "rejection_precision = rejected sentences judged unsupported; kept_precision = kept sentences judged supported; blank (cannot tell) rows are skipped"
+}
