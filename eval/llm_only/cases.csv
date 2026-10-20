@@ -1,0 +1,34 @@
+query_id,rank,llm_title,llm_citation,llm_year,llm_status,case_id,method,matched_title,full_text,our_label,in_our_topk,nli_sentences,nli_kept
+q1,1,Mafatlal Industries Ltd. v. Mafatlal Industries Employees' Union,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q1,2,Hindustan Aeronautics Ltd. v. R. K. Sinha,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q1,3,M/s. Hindustan Aeronautics Ltd. v. R. K. Sinha,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q1,4,M/s. Hindustan Aeronautics Ltd. v. R. K. Sinha,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q1,5,M/s. Mafatlal Industries Ltd. v. Mafatlal Industries Employees' Union,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q2,1,State of Uttar Pradesh v. Rajesh Gautam,(1995) 4 SCC 1,1995,good_law,sc:ESCR010002541994,name_year,STATE OF UP AND ORS. versus RAJIV GUPTA AND ANR. ETC.,False,insufficient_evidence,False,0,0
+q2,2,Selvi v. State of Karnataka,(2010) 7 SCC 263,2010,good_law,,unresolved:name_no_match,,False,,False,0,0
+q2,3,State of Maharashtra v. K. R. K.,(2005) 5 SCC 1,2005,good_law,,unresolved:name_no_match,,False,,False,0,0
+q2,4,State of Punjab v. Balbir Singh,(1999) 4 SCC 1,1999,good_law,,unresolved:name_no_match,,False,,False,0,0
+q2,5,Nandini Satpathy v. P.L. Dani,(1978) 1 SCC 322,1978,good_law,sc:ESCR010001861978,name_year,NANDINI SATPATHY versus DANI (P.L.) AND ANR.,False,followed,False,0,0
+q2,6,K. M. Nanavati v. State of Maharashtra,(1962) 1 SCR 567,1962,good_law,sc:ESCR010000481962,key_range,S. N. DUTT  versus UNION OF INDIA,False,insufficient_evidence,False,0,0
+q2,7,State of Rajasthan v. Kashi Ram,(2006) 5 SCC 1,2006,good_law,sc:ESCR010008872006,name_year,STATE OF RAJASTHAN versus KASHI RAM,False,followed,False,0,0
+q2,8,Mohan Lal v. State of Punjab,(1995) 5 SCC 1,1995,good_law,sc:ESCR010006851996,name_year,STATE OF M.P. versus MOHAN LAL AND ORS.,False,insufficient_evidence,False,0,0
+q2,9,State of Gujarat v. Ramesh,(2005) 5 SCC 1,2005,good_law,,unresolved:name_no_match,,False,,False,0,0
+q2,10,State of Haryana v. Bhajan Lal,(1992) 1992 SCC (Cri) 1,1992,good_law,sc:ESCR010003591992,name_year,STATE OF HARYANA AND ORS. ETC. ETC. versus CH. BHAJAN LAL AND ANOTHER ETC. ETC.,False,followed,False,0,0
+q3,1,Mohan Lal v. Smt. Rani,(1975) 1 SCC 1,1975,good_law,,unresolved:name_no_match,,False,,False,0,0
+q3,2,Mohan Lal v. Smt. Rani,(1975) 1 SCC 1,1975,good_law,,unresolved:name_no_match,,False,,False,0,0
+q3,3,Mohan Lal v. Smt. Rani,(1975) 1 SCC 1,1975,good_law,,unresolved:name_no_match,,False,,False,0,0
+q3,4,Mohan Lal v. Smt. Rani,(1975) 1 SCC 1,1975,good_law,,unresolved:name_no_match,,False,,False,0,0
+q3,5,Mohan Lal v. Smt. Rani,(1975) 1 SCC 1,1975,good_law,,unresolved:name_no_match,,False,,False,0,0
+q4,1,A.K. Kraipak v. Union of India,(1970) 1 SCC 362,1970,good_law,sc:ESCR010000451970,name_year,A. K. KRAIPAK & ORS. ETC. versus UNION OF. INDIA & ORS.,False,followed,False,0,0
+q4,2,Maneka Gandhi v. Union of India,(1978) 1 SCC 248,1978,good_law,sc:ESCR010001201978,name_year,MANEKA GANDHI versus UNION OF INDIA,False,followed,False,0,0
+q4,3,S.P. Gupta v. Union of India,(1981) 1 SCC 396,1981,good_law,sc:ESCR010000921982,name_year,S.P. GUPTA & ORS. ETC. ETC. versus UNION OF INDIA & ORS. ETC. ETC.,False,followed,False,0,0
+q4,4,Union of India v. Tulsiram Patel,(1985) 3 SCC 398,1985,distinguished,sc:ESCR010002741985,name_year,UNION OF INDIA AND ANOTHER versus TULSIRAM PATEL AND OTHERS,False,followed,False,0,0
+q4,5,M.C. Mehta v. Union of India,(1997) 1 SCC 388,1997,good_law,,unresolved:name_no_match,,False,,False,0,0
+q4,6,Hindustan Copper Ltd. v. Union of India,(1995) 4 SCC 1,1995,good_law,,unresolved:name_no_match,,False,,False,0,0
+q4,7,Hindustan Zinc Ltd. v. Union of India,(2005) 5 SCC 1,2005,good_law,sc:ESCR010005782014,name_only,UNION OF INDIA & ORS. versus M/S. HINDUSTAN ZINC LTD.,False,insufficient_evidence,False,0,0
+q4,8,Kalyani Steels Ltd. v. Union of India,(2005) 4 SCC 1,2005,good_law,,unresolved:name_no_match,,False,,False,0,0
+q4,9,Jindal Steel & Power Ltd. v. Union of India,(2015) 8 SCC 1,2015,good_law,,unresolved:name_no_match,,False,,False,0,0
+q4,10,M/s. Hindustan Copper Ltd. v. Union of India,(2005) 6 SCC 1,2005,good_law,,unresolved:name_no_match,,False,,False,0,0
+q5,1,Coca Cola Co. v. Parle Products Ltd.,(1977) 1 SCC 1,1977,good_law,,unresolved:name_no_match,,False,,False,0,0
+q5,2,Hindustan Lever Ltd. v. Procter & Gamble Ltd.,(1998) 5 SCC 1,1998,good_law,,unresolved:name_no_match,,False,,False,0,0
+q5,3,Cadila Health Care Ltd. v. Cadila Pharmaceuticals Ltd.,(2001) 4 SCC 1,2001,good_law,sc:ESCR010001832001,name_year,CADILA HEALTH CARE LTD. versus CADILA PHARMACEUTICALS LTD.,False,insufficient_evidence,False,0,0

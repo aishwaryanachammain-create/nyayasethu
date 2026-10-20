@@ -274,4 +274,34 @@ faithfulness 0.10.
 | | value | file |
 |---|---|---|
 | API `/search`, top-10 with validity + extractive summary per hit | 0.59 s (one query, in-process) | Phase 4 check |
-| LLM-only baseline (precedents exist? validity agrees with ours?) | **PENDING** (no API key) | `python -m baseline_llm.run --engine --nli` |
+| LLM-only baseline: named cases confirmed to exist (see 4.1) | 8 of 33 (24%) | `eval/llm_only/results.json`, `cases.csv` |
+
+### 4.1 LLM-only baseline (`python -m baseline_llm.run --engine --nli`)
+
+The LLM (gpt-oss-120b via Groq, temperature 0) was asked for up to 10 Supreme Court precedents, a 5-field
+summary and a validity status for each of the 5 demo queries (`app/latency_test.py`). Raw replies:
+`eval/llm_only/responses.jsonl`. Two replies were re-requested: q3 came back cut off mid-JSON during a network
+outage, and q4 came back empty (the reasoning model used its whole token budget).
+
+| | value |
+|---|---|
+| cases named (5 queries) | 33 (q1 5, q2 10, q3 5, q4 10, q5 3) |
+| resolved by the Stage 0 resolver | 12 |
+| of those, the matched case is clearly a different one (checked by reading titles) | 3 (*Rajesh Gautam* to *Rajiv Gupta*; *K. M. Nanavati* to *S. N. Dutt*; *Mohan Lal v. State of Punjab* to *State of M.P. v. Mohan Lal*) |
+| uncertain match (party names only, no year) | 1 (*Hindustan Zinc Ltd. v. Union of India*) |
+| **confirmed to exist in our graph** | **8 of 33 (24%)** |
+| citations of the form "(year) N SCC 1" | 24 of 33 |
+| distinct cases per query | q1 4 of 5, q3 1 of 5 (the same case five times) |
+| status given by the LLM | good law 32, distinguished 1 |
+| validity agreement where ours is decided | 6 of 7 (the LLM calls *Tulsiram Patel* distinguished; ours: followed) |
+| overlap with our engine's top 10 | 0 |
+| NLI check of the LLM's summaries | not possible: none of the 33 cases has full text in our corpus |
+
+* **Unresolved does not mean invented.** Some unresolved cases are real but outside what the resolver can
+  match (e.g. *Selvi v. State of Karnataka*, *K. M. Nanavati*). The resolver also makes false matches, so the
+  12 raw matches were checked by hand.
+* **Still, the signs of fabrication are strong:** most citations point to page 1 of a volume, one query
+  repeats the same case five times, and the LLM labels almost every case good law. Without grounding it cannot
+  flag a case that is no longer good law, which is what Stage 4 adds.
+* **The LLM's cases are older landmark judgments:** all 33 are dated before 2018 (31 before 2010). Our engine
+  searches the 2018-2023 full-text corpus, which explains zero overlap and the missing NLI check.

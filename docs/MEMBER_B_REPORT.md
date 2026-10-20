@@ -102,24 +102,19 @@ on branch `member-b`, one commit per phase.
   * 108,706 citation mentions, 34.4% resolved (SCR 91%, SCC 39%);
   * 30,011 judgment-level edges;
   * 3,389 cases with at least 3 citing judgments.
-  * Precision on a 300-row sample checked by AI (Claude), **not by a person**:
-    * extraction 0.83 (reporter citations 1.00, bare case names 0.65);
-    * resolution 0.95 (95% interval 0.91 to 0.98).
+  * Extraction precision, human-checked on 30 of 150 sampled rows: 0.83 (25/30; reporter citations 17/17,
+    bare case names 8/13). An earlier AI check of all 150 gave the same picture (0.83).
     
-    A human check is pending.
+    The human check of resolution is pending.
 * **Validity:**
   * 27.8% of cited cases get a verdict (followed 2,991, distinguished 208, overruled 40); the rest are
     insufficient evidence.
   * Against held-out editorial labels (agreement, not gold), the classifier reaches 3-class macro-F1 0.286
     vs 0.171 for the keyword rules.
-  * On the 400-row gold sample, two label sets were scored. **Neither is human-annotated.**
-    * **Copied suggestions** (the `label` column copied from the editorial/keyword `suggested_label`; 340
-      rows). This run is circular: the editorial label scores 1.0 against itself. Classifier 3-class
-      macro-F1 0.394, keyword rules 0.350.
-    * **AI review** (Claude's `assistant_label`; 398 rows). Classifier 0.345, keyword rules 0.225, editorial
-      label 0.402.
-    
-    Human-verified gold is pending.
+  * On the 400-row human-reviewed gold sample (3-class macro-F1): zero-shot LLM (gpt-oss-120b) **0.778**,
+    editorial label 0.519, keyword rules 0.385, classifier 0.354. The review started from AI pre-labels (39 of
+    400 changed), which may favour the LLM. Earlier runs on copied suggestions and on AI labels are kept in
+    `eval/RESULTS_B.md` §2.3 for comparison.
 * **Summaries:**
   * IN-Abs test, untuned → fine-tuned: ROUGE-1 0.330 → 0.418, ROUGE-2 0.112 → 0.221, ROUGE-L 0.174 → 0.234,
     BERTScore 0.817 → 0.852.
@@ -127,13 +122,13 @@ on branch `member-b`, one commit per phase.
     text, and the facts field covers 99.6% from 26%.
   * NLI rejection: 37.0% of the generated sentences in query-focused summaries, against 48.0% of generic
     summaries' sentences.
-  * Human evaluation is pending: the rater sheets are blank.
-  * An AI judge (Claude, the same assistant that built the pipeline, so possibly biased) rated relevance and
-    usefulness as a stand-in:
-    * Overall, generic summaries are preferred, 14 to 8.
-    * Where the retrieved case is relevant (8 pairs), query-focused summaries are more relevant (4.0 vs 2.9)
-      and preferred 4 to 3.
-* **LLM baselines:** PENDING (no API key).
+  * Human evaluation (2 raters, 25 blinded pairs): generic summaries are preferred 29 to 18 (3 ties); the
+    two styles score about the same (relevance 1.32 vs 1.24, usefulness 2.24 vs 2.22, faithfulness 3.64 vs
+    3.80, query-focused first). Raters agree on preference in 19 of 25 pairs (kappa 0.56), but hardly on
+    faithfulness (weighted kappa 0.10). An earlier AI-judge stand-in also preferred generic summaries.
+* **LLM-only baseline** (gpt-oss-120b, 5 demo queries): of 33 precedents named, 8 (24%) are confirmed to exist
+  in our graph; 24 of 33 citations have the form "(year) N SCC 1"; the LLM calls 32 of 33 good law. None
+  overlap our top 10. Details: `eval/RESULTS_B.md` §4.1.
 
 ## 4. Changes to Member A's files
 
@@ -165,13 +160,14 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
   * The AI review (not human-verified; see `eval/RESULTS_B.md` §2.3) suggests that many editorial "overruled"
     entries sit in judgments that only report an overruling by another bench. The verdicts may still be
     right, but the bench-weighting then applies to the wrong judgment.
-  * No human-verified gold exists. The scores are either agreement with silver labels, circular agreement
-    with copied suggestions, or agreement with AI labels.
+  * The human gold review started from AI pre-labels, so it is not fully independent of an LLM.
+  * A zero-shot LLM classifies treatment far better than the fine-tuned classifier (0.778 vs 0.354), but the
+    validity verdicts are still built from the classifier and editorial labels.
 * **Graph:**
   * About two thirds of citation mentions stay unresolved, mostly SCC and AIR citations without a nearby
     party name, and bare names.
-  * Precision was checked by AI, not by a person. Reporter citations look reliable. Bare case names do not:
-    page headers get read as citations.
+  * Only 30 extraction rows and no resolution rows are human-checked. Reporter citations look reliable. Bare
+    case names do not: page headers get read as citations.
   * About 0.9% of edges come from page headers or an editorial reference list the front-matter filter missed.
     A fix is proposed in `eval/RESULTS_B.md` §1 but not applied.
 * **Summaries:**
@@ -184,32 +180,23 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
 * **Evaluation:**
   * IN-Ext coverage measures the role pools rather than the generated text.
   * A's labeller is trained on the IN-Ext documents, so its coverage row is optimistic.
-  * The human evaluation has not been done. The AI-judge stand-in has the following limits:
-    * it may favour its own pipeline;
-    * it could not be blinded to the 5-field format;
-    * it did not rate faithfulness.
+  * The human evaluation has 2 raters and 25 pairs; the 5-field format cannot be blinded, and faithfulness
+    ratings barely agree between raters.
 * **Retrieval quality** (A's stages) caps everything downstream. Without the cross-encoder some top results
   are off-topic (e.g. a compassionate-appointment case for a gratuity query).
 
-## 6. Still to do (needs a person or a key)
+## 6. Still to do (needs a person)
 
-1. **Human gold labels.** The current `label` column holds copied machine suggestions. A person should
-   review each row and replace it with their own label (guide: `eval/GOLD_LABELLING_GUIDE.md`), then run:
-   ```
-   python -m stage4_validity.evaluate --provenance "<who labelled>"
-   ```
-2. **Human citation check.** The current yes/no values come from AI checks. A person should verify them
-   (guide: `eval/CITATION_CHECK_GUIDE.md`), then run:
+1. **Human citation check.** Resolution is unchecked (0 of 150) and extraction is checked on 30 of 150. A
+   person should finish `eval/citation_precision_sample.csv` (guide: `eval/CITATION_CHECK_GUIDE.md`), then run:
    ```
    python -m stage0_graph.precision --provenance "<who checked>"
    ```
-3. **Human ratings.** Raters fill `eval/human_eval_sheet_rater1.csv` and `_rater2.csv` (guide:
-   `eval/HUMAN_EVAL_GUIDE.md`), then run:
-   ```
-   python -m stage5_summary.eval_pairs --score eval/human_eval_sheet_rater1.csv eval/human_eval_sheet_rater2.csv
-   ```
-4. Put an LLM key in `.env`, then run `python -m stage4_validity.llm_baseline` and
-   `python -m baseline_llm.run --engine --nli`.
+2. **NLI filter precision.** Hand-check a sample of kept and rejected summary sentences (§3.3 of
+   `eval/RESULTS_B.md`).
+
+Done since the first version of this report: human gold labels, human ratings, the Stage 4 LLM baseline and the
+LLM-only baseline.
 
 ## 7. How to run
 

@@ -1,0 +1,31 @@
+{
+  "provider": "openai",
+  "model": "openai/gpt-oss-120b",
+  "k": 10,
+  "cases_named": 33,
+  "queries": 5,
+  "exists_in_graph": 12,
+  "exists_rate": 0.3636,
+  "full_text": 0,
+  "resolve_method": {
+    "name_year": 10,
+    "key_range": 1,
+    "name_only": 1
+  },
+  "llm_status": {
+    "good_law": 32,
+    "distinguished": 1
+  },
+  "our_label_for_existing": {
+    "insufficient_evidence": 5,
+    "followed": 7
+  },
+  "validity_compared": 7,
+  "validity_agreement": 0.8571,
+  "validity_pairs": {
+    "llm=followed|ours=followed": 6,
+    "llm=distinguished|ours=followed": 1
+  },
+  "in_our_topk": 0,
+  "note": "exists = resolved to a known SC case; unresolved is not proof of hallucination (HC cases and SCC/AIR citations of cases the resolver cannot match stay unresolved)"
+}
