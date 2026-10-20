@@ -1,7 +1,7 @@
 """Hand annotation for the roles the open data lacks (Issue). Round trip:
 
 1) export ~20 SC judgments, pre-labelled by the current model (Issue pre-marked by cue rules):
-   python -m stage1_roles.annotate export --n 20
+   python -m stage1_roles.annotate export --n 20 [--max-sentences 120]   # cap length to keep it hand-checkable
 2) correct the `gold` column in data/validation/roles_to_annotate.csv. Allowed labels:
    Facts | Ruling by Lower Court | Issue | Argument | Statute | Precedent | Ratio of the decision | Ruling by Present Court
 3) import -> data/processed/roles_gold.jsonl (picked up automatically by stage1_roles.train)
@@ -29,6 +29,7 @@ def main():
     e.add_argument("--n", type=int, default=20)
     e.add_argument("--out", default=str(path("validation") / "roles_to_annotate.csv"))
     e.add_argument("--seed", type=int, default=13)
+    e.add_argument("--max-sentences", type=int, help="only judgments with at most this many sentences")
     i = sub.add_parser("import")
     i.add_argument("--csv", default=str(path("validation") / "roles_to_annotate.csv"))
     i.add_argument("--second-annotator")
@@ -36,7 +37,8 @@ def main():
     a = p.parse_args()
 
     if a.cmd == "export":
-        docs = [d for d in load_judgments(path("judgments")) if not d.has_roles and d.source == "AWS-SC"]
+        docs = [d for d in load_judgments(path("judgments")) if not d.has_roles and d.source == "AWS-SC"
+                and (not a.max_sentences or len(d.sentences) <= a.max_sentences)]
         if not docs:
             raise SystemExit("No unlabelled SC judgments in judgments.jsonl yet (download + build_corpus first).")
         random.Random(a.seed).shuffle(docs)

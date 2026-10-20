@@ -7,10 +7,14 @@ Tasks:
   citation extraction   eval/citation_precision_sample.csv, column extraction_correct (guide: CITATION_CHECK_GUIDE.md)
   citation resolution   eval/citation_precision_sample.csv, column resolution_correct
   NLI filter            eval/nli_check_sample.csv, column supported (blinded: kept/rejected is not shown)
+  Sentence splitter     data/validation/splitter_annotate.txt, line breaks only (step 6)
+  Sentence roles        data/validation/roles_to_annotate.csv, column gold (step 11b, adds the Issue role)
 
 When done:
     python -m stage0_graph.precision --provenance "<who checked>"
     python -m stage5_summary.nli_check --score --provenance "<who checked>"
+    python -m stage0_corpus.splitter_validate
+    python -m stage1_roles.annotate import
 """
 import html
 import re
@@ -47,6 +51,20 @@ HELP = {
                   "enough.",
 }
 
+VAL = ROOT / "data" / "validation"
+SPLIT_TXT, SPLIT_RAW, SPLIT_DONE = VAL / "splitter_annotate.txt", VAL / "splitter_sample.jsonl", VAL / "splitter_done.txt"
+ROLES_CSV, ROLES_DONE = VAL / "roles_to_annotate.csv", VAL / "roles_done.txt"
+ROLE_HELP = {
+    "Facts": "what happened between the parties before the case reached this court",
+    "Ruling by Lower Court": "what the trial court / High Court decided",
+    "Issue": "the legal question(s) this court has to answer (often “whether …”, “the question is …”)",
+    "Argument": "what counsel for either side submitted",
+    "Statute": "text of a statute or rule quoted or described",
+    "Precedent": "discussion of an earlier judgment",
+    "Ratio of the decision": "this court's own reasoning",
+    "Ruling by Present Court": "this court's final order (appeal allowed / dismissed, directions)",
+}
+
 st.set_page_config(page_title="NyayaSethu checks", layout="wide")
 
 
@@ -68,7 +86,118 @@ def highlight(text: str, needle: str) -> str:
     return t
 
 
-task = st.sidebar.radio("Task", list(TASKS))
+def done_set(p: Path) -> set:
+    return set(p.read_text().split()) if p.exists() else set()
+
+
+def mark_done(p: Path, key: str):
+    p.write_text("\n".join(sorted(done_set(p) | {key})) + "\n")
+
+
+def splitter_task():
+    import json
+    sq = lambda t: re.sub(r"\s+", "", t)
+    raw = {json.loads(l)["pid"]: json.loads(l) for l in open(SPLIT_RAW, encoding="utf-8")}
+    lines = SPLIT_TXT.read_text(encoding="utf-8").split("\n")
+    head, blocks, cur = [], {}, None
+    for ln in lines:
+        if ln.startswith("###"):
+            cur = ln.split()[1]
+            blocks[cur] = {"header": ln, "sents": []}
+        elif cur is None:
+            head.append(ln)
+        elif ln.strip():
+            blocks[cur]["sents"].append(ln.strip())
+    done = done_set(SPLIT_DONE)
+    pids = list(blocks)
+    st.sidebar.progress(len(done & set(pids)) / len(pids), text=f"{len(done & set(pids))} / {len(pids)} passages saved")
+    if st.session_state.get("sp_pick") not in pids:
+        st.session_state["sp_pick"] = next((p for p in pids if p not in done), pids[0])
+    pid = st.sidebar.selectbox("Passage", pids, key="sp_pick")
+    st.markdown("### Put exactly one true sentence on each line")
+    st.caption("Join lines that are one sentence (e.g. split after “v.”, “No.”, “S.”, “i.e.”); press Enter where "
+               "two sentences share a line. Change line breaks only, never the words.")
+    st.markdown(f"Passage **{pid}** · {raw[pid]['case_id']}" + (" · ✅ saved" if pid in done else ""))
+    st.text_area("Sentences", "\n".join(blocks[pid]["sents"]), height=380, key=f"sp_{pid}")
+
+    def save_passage():
+        new = [x.strip() for x in st.session_state[f"sp_{pid}"].split("\n") if x.strip()]
+        if sq(" ".join(new)) != sq(raw[pid]["text"]):
+            st.session_state["sp_msg"] = ("error", f"{pid} not saved: the words changed. Only add or remove line "
+                                          "breaks (undo with Cmd+Z).")
+            return
+        blocks[pid]["sents"] = new
+        out = "\n".join(head).rstrip("\n") + "\n"
+        for b in blocks.values():
+            out += "\n" + b["header"] + "\n" + "\n".join(b["sents"]) + "\n"
+        tmp = SPLIT_TXT.with_suffix(".tmp")
+        tmp.write_text(out, encoding="utf-8")
+        tmp.replace(SPLIT_TXT)
+        mark_done(SPLIT_DONE, pid)
+        left = [p for p in pids if p not in done_set(SPLIT_DONE)]
+        st.session_state["sp_msg"] = ("success", f"Saved {pid} ({len(new)} sentences)." +
+                                      (f" Now on {left[0]}." if left else " All passages saved."))
+        if left:
+            st.session_state["sp_pick"] = left[0]
+
+    st.button("💾 Save passage and go to the next", type="primary", on_click=save_passage)
+    if "sp_msg" in st.session_state:
+        kind, msg = st.session_state.pop("sp_msg")
+        (st.error if kind == "error" else st.success)(msg)
+
+
+def roles_task():
+    df = load(ROLES_CSV)
+    labels = list(ROLE_HELP)
+    cases = list(dict.fromkeys(df.case_id))
+    done = done_set(ROLES_DONE)
+    st.sidebar.progress(len(done & set(cases)) / len(cases), text=f"{len(done & set(cases))} / {len(cases)} judgments saved")
+    if st.session_state.get("ro_pick") not in cases:
+        st.session_state["ro_pick"] = next((c for c in cases if c not in done), cases[0])
+    cid = st.sidebar.selectbox("Judgment", cases, key="ro_pick",
+                               format_func=lambda c: f"{c} ({(df.case_id == c).sum()} sentences)" + (" ✅" if c in done else ""))
+    with st.sidebar.expander("What the roles mean", expanded=True):
+        for k, v in ROLE_HELP.items():
+            st.markdown(f"**{k}**: {v}")
+    st.markdown("### Correct the role of every sentence")
+    st.caption("Pre-filled by the current model (Issue by cue words). Read top to bottom and change the `gold` "
+               "dropdown where it is wrong. Every sentence counts as training data, so check all of them.")
+    sub = df[df.case_id == cid][["sent_idx", "sentence", "gold"]].copy()
+    sub["sent_idx"] = sub.sent_idx.astype(int)
+    ed = st.data_editor(sub, hide_index=True, width="stretch", height=560, key=f"ro_{cid}",
+                        disabled=["sent_idx", "sentence"],
+                        column_config={"sentence": st.column_config.TextColumn(width="large"),
+                                       "gold": st.column_config.SelectboxColumn(options=labels, required=True)})
+
+    def save_judgment():
+        d = load(ROLES_CSV)
+        m = d.case_id == cid
+        gold = sub["gold"].tolist()
+        for row, ch in st.session_state[f"ro_{cid}"].get("edited_rows", {}).items():
+            if "gold" in ch:
+                gold[int(row)] = ch["gold"]
+        d.loc[m, "gold"] = gold
+        save(d, ROLES_CSV)
+        mark_done(ROLES_DONE, cid)
+        n = sum(g != p for g, p in zip(gold, d.loc[m, "predicted"]))
+        left = [c for c in cases if c not in done_set(ROLES_DONE)]
+        st.session_state["ro_msg"] = f"Saved {cid}: {n} labels changed from the pre-label." + (
+            f" Now on {left[0]}." if left else " All judgments saved.")
+        if left:
+            st.session_state["ro_pick"] = left[0]
+
+    st.button("💾 Save judgment and go to the next", type="primary", on_click=save_judgment)
+    if "ro_msg" in st.session_state:
+        st.success(st.session_state.pop("ro_msg"))
+
+
+task = st.sidebar.radio("Task", list(TASKS) + ["Sentence splitter", "Sentence roles"])
+if task == "Sentence splitter":
+    splitter_task() if SPLIT_TXT.exists() else st.error("Run: python -m stage0_corpus.splitter_sample")
+    st.stop()
+if task == "Sentence roles":
+    roles_task() if ROLES_CSV.exists() else st.error("Run: python -m stage1_roles.annotate export --n 10 --max-sentences 120")
+    st.stop()
 path, check, col = TASKS[task]
 if not path.exists():
     st.error(f"{path.name} not found. For the NLI task run: python -m stage5_summary.nli_check --make")
@@ -139,10 +268,10 @@ def answer(v: str):
 
 
 c = st.columns([1, 0.4, 1, 0.4, 1, 1, 1])        # spacers between the answer buttons against misclicks
-c[0].button("✅ Yes", on_click=answer, args=("yes",), use_container_width=True, type="primary")
-c[2].button("❌ No", on_click=answer, args=("no",), use_container_width=True)
-c[4].button("🤷 Can't tell", on_click=answer, args=("unsure",), use_container_width=True)
-c[5].button("◀ Back", on_click=lambda: st.session_state.update({key: max(pos - 1, 0)}), use_container_width=True,
+c[0].button("✅ Yes", on_click=answer, args=("yes",), width="stretch", type="primary")
+c[2].button("❌ No", on_click=answer, args=("no",), width="stretch")
+c[4].button("🤷 Can't tell", on_click=answer, args=("unsure",), width="stretch")
+c[5].button("◀ Back", on_click=lambda: st.session_state.update({key: max(pos - 1, 0)}), width="stretch",
             disabled=pos == 0)
-c[6].button("Skip ▶", on_click=lambda: st.session_state.update({key: pos + 1}), use_container_width=True,
+c[6].button("Skip ▶", on_click=lambda: st.session_state.update({key: pos + 1}), width="stretch",
             disabled=pos >= len(queue) - 1)

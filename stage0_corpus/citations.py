@@ -29,6 +29,12 @@ CASE_NAME = re.compile(
     r"(?P<p2>(?:[A-Z][\w.&'\-]*(?:\s|,|$)){1,6}(?:(?:of|and|&)\s(?:[A-Z][\w.&'\-]*\s?){1,4})?)")
 
 
+# SCR running page headers ("SUPREME COURT REPORTS [2020] 1 S.C.R. 36", or "36 SUPREME COURT REPORTS [2020] 1 S.C.R.")
+# name the page of the citing judgment itself; read as citations they point at whichever case starts on that page.
+SCR_HEADER = re.compile(r"SUPREME\s+COURT\s+REPORTS\s*\[\d{4}\]\s*\d{1,2}\s*S\.?\s?C\.?\s?R\.?\s*\d{1,5}|"
+                        r"\b\d{1,5}\s*SUPREME\s+COURT\s+REPORTS\s*\[\d{4}\]\s*\d{1,2}\s*S\.?\s?C\.?\s?R\.?", re.I)
+
+
 @dataclass(frozen=True)
 class Citation:
     reporter: str
@@ -83,11 +89,18 @@ def extract_case_names(text: str) -> List[str]:
 class CitationResolver:
     """Maps reporter keys and normalised case names to corpus doc_ids."""
 
+    # The short "surname v first-word" key is skipped when the other party starts with one of these words: it would
+    # match every "<X> Singh v. State of <Y>" citation.
+    GENERIC_PARTY = {"state", "union", "govt", "government", "commissioner", "the", "central", "chief", "director",
+                     "secretary", "collector", "municipal", "national", "district", "registrar"}
+
     def __init__(self):
         self.by_key: Dict[str, str] = {}
         self.by_name: Dict[str, str] = {}
+        self._short: Dict[str, str] = {}          # short key -> doc_id; None once two judgments share it
 
     def register(self, doc_id: str, aliases: Iterable[str] = (), title: str = "") -> None:
+        self._index_size = None                   # invalidate the first-token index used by resolve_sentence
         for a in aliases:
             k = canonical_key(a) or a.strip()
             self.by_key[k] = doc_id
@@ -95,19 +108,48 @@ class CitationResolver:
             n = normalise_case_name(title)
             if n:
                 self.by_name[n] = doc_id
-                # also register first-party-surname heuristic "fateh chand v balkishan"
+                # also register first-party-surname heuristic "fateh chand v balkishan", unless it is generic
+                # (other party "State", "Union", ...) or ambiguous (two judgments give the same short key)
                 parts = n.split(" v ")
-                if len(parts) == 2:
-                    self.by_name[parts[0].split()[-1] + " v " + parts[1].split()[0]] = doc_id
+                if len(parts) == 2 and parts[0].split() and parts[1].split() \
+                        and parts[1].split()[0] not in self.GENERIC_PARTY:
+                    short = parts[0].split()[-1] + " v " + parts[1].split()[0]
+                    if short != n:
+                        if short in self._short and self._short[short] != doc_id:
+                            prev, self._short[short] = self._short[short], None
+                            if prev is not None and self.by_name.get(short) == prev:
+                                del self.by_name[short]         # only the short-key entry, never a full title
+                        elif short not in self._short:
+                            self._short[short] = doc_id
+                            self.by_name.setdefault(short, doc_id)
 
     def resolve_sentence(self, sentence: str) -> List[str]:
         ids: List[str] = []
-        for c in extract_citations(sentence):
+        for c in extract_citations(SCR_HEADER.sub(" ", sentence)):
             d = self.by_key.get(c.key)
             if d and d not in ids:
                 ids.append(d)
-        low = normalise_case_name(sentence)
-        for name, d in self.by_name.items():
-            if d not in ids and len(name) > 6 and f" {name} " in f" {low} ":
+        # Same result as testing `f" {name} " in f" {low} "` for every registered name (both sides are normalised
+        # to single-spaced tokens), but only names whose first token occurs in the sentence are compared.
+        toks = normalise_case_name(sentence).split()
+        hits = set()
+        for i, t in enumerate(toks):
+            for name, ntoks in self._by_first().get(t, ()):
+                if len(name) > 6 and toks[i:i + len(ntoks)] == ntoks:
+                    hits.add(name)
+        for name in sorted(hits, key=self._name_order.__getitem__):     # registration order, as before
+            d = self.by_name[name]
+            if d not in ids:
                 ids.append(d)
         return ids
+
+    def _by_first(self) -> Dict[str, list]:
+        if getattr(self, "_index_size", None) is None:
+            self._first, self._name_order = {}, {}
+            for k, name in enumerate(self.by_name):
+                self._name_order[name] = k
+                ntoks = name.split()
+                if ntoks:
+                    self._first.setdefault(ntoks[0], []).append((name, ntoks))
+            self._index_size = len(self.by_name)
+        return self._first

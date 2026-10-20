@@ -99,6 +99,7 @@ def build(root: Path) -> Path:
     for k, v in c["paths"].items():
         c["paths"][k] = str(root / v)
     c["paths"]["judgments"] = str(root / "data/judgments.jsonl")   # the fixture's file, whatever the repo default
+    c["paths"]["segments"] = str(root / "data/segments.parquet")   # likewise for the Stage 1 hand-off
     c["models"]["encoder"] = str(tb)
     c["stage1"].update({"features": "lsa", "epochs": 6, "patience": 3, "lstm_hidden": 32})
     c["stage2"].update({"chunk_tokens": 64, "chunk_stride": 16, "biencoder_batch": 4})
