@@ -1,7 +1,7 @@
 {
   "note": "weak_test = agreement with editorial weak labels (not accuracy); gold = the `label` column of the gold file, whose provenance is in gold_provenance",
   "gold_file": "eval/gold_to_label.csv",
-  "gold_provenance": "copied from suggested_label (SCR editorial label, else keyword-cue guess); NOT human-verified; 60 rows without a suggestion are blank and skipped",
+  "gold_provenance": "human-reviewed labels committed in cee7305 (K Deepika), starting from AI pre-labels (assistant_label); the human label differs from the AI pre-label on 39 of 400 rows",
   "weak_test": {
     "cue_rules": {
       "n": 1384,
@@ -107,29 +107,29 @@
     }
   },
   "gold": {
-    "n_labelled": 340,
+    "n_labelled": 400,
     "n_rows": 400,
     "gold_by_class": {
-      "followed": 110,
-      "distinguished": 100,
-      "neutral": 70,
-      "overruled": 60
+      "neutral": 213,
+      "followed": 142,
+      "distinguished": 23,
+      "overruled": 22
     },
     "cue_rules": {
-      "n": 340,
-      "macro_f1_3class": 0.3502,
-      "macro_f1_4class": 0.3592,
+      "n": 400,
+      "macro_f1_3class": 0.3853,
+      "macro_f1_4class": 0.4518,
       "per_class_f1": {
-        "followed": 0.1975,
-        "distinguished": 0.1296,
-        "overruled": 0.7234,
-        "neutral": 0.3861
+        "followed": 0.1546,
+        "distinguished": 0.3226,
+        "overruled": 0.6786,
+        "neutral": 0.6513
       },
       "support": {
-        "followed": 110,
-        "distinguished": 100,
-        "overruled": 60,
-        "neutral": 70
+        "followed": 142,
+        "distinguished": 23,
+        "overruled": 22,
+        "neutral": 213
       },
       "confusion_matrix": {
         "labels": [
@@ -140,47 +140,47 @@
         ],
         "rows_true_cols_pred": [
           [
-            16,
+            15,
             0,
-            0,
-            94
+            4,
+            123
           ],
           [
-            21,
-            7,
+            5,
+            5,
             0,
-            72
+            13
           ],
           [
-            7,
+            2,
             0,
-            34,
-            19
+            19,
+            1
           ],
           [
-            8,
-            1,
-            0,
-            61
+            30,
+            3,
+            11,
+            169
           ]
         ]
       }
     },
     "editorial_weak_label": {
       "n": 319,
-      "macro_f1_3class": 1.0,
-      "macro_f1_4class": 1.0,
+      "macro_f1_3class": 0.519,
+      "macro_f1_4class": 0.4888,
       "per_class_f1": {
-        "followed": 1.0,
-        "distinguished": 1.0,
-        "overruled": 1.0,
-        "neutral": 1.0
+        "followed": 0.6636,
+        "distinguished": 0.3115,
+        "overruled": 0.5818,
+        "neutral": 0.3983
       },
       "support": {
         "followed": 110,
-        "distinguished": 100,
-        "overruled": 39,
-        "neutral": 70
+        "distinguished": 22,
+        "overruled": 16,
+        "neutral": 171
       },
       "confusion_matrix": {
         "labels": [
@@ -191,47 +191,47 @@
         ],
         "rows_true_cols_pred": [
           [
-            110,
-            0,
-            0,
-            0
+            73,
+            11,
+            5,
+            21
           ],
           [
-            0,
-            100,
-            0,
-            0
-          ],
-          [
-            0,
-            0,
-            39,
-            0
+            1,
+            19,
+            1,
+            1
           ],
           [
             0,
             0,
-            0,
-            70
+            16,
+            0
+          ],
+          [
+            36,
+            70,
+            17,
+            48
           ]
         ]
       }
     },
     "classifier": {
-      "n": 340,
-      "macro_f1_3class": 0.3941,
-      "macro_f1_4class": 0.3752,
+      "n": 400,
+      "macro_f1_3class": 0.3537,
+      "macro_f1_4class": 0.4032,
       "per_class_f1": {
-        "followed": 0.5846,
-        "distinguished": 0.5978,
+        "followed": 0.7059,
+        "distinguished": 0.3551,
         "overruled": 0.0,
-        "neutral": 0.3182
+        "neutral": 0.5517
       },
       "support": {
-        "followed": 110,
-        "distinguished": 100,
-        "overruled": 60,
-        "neutral": 70
+        "followed": 142,
+        "distinguished": 23,
+        "overruled": 22,
+        "neutral": 213
       },
       "confusion_matrix": {
         "labels": [
@@ -242,31 +242,83 @@
         ],
         "rows_true_cols_pred": [
           [
-            76,
-            9,
-            0,
-            25
-          ],
-          [
-            23,
-            55,
+            114,
+            6,
             0,
             22
           ],
           [
-            18,
-            11,
+            3,
+            19,
             0,
-            31
+            1
           ],
           [
-            33,
-            9,
+            4,
+            2,
             0,
-            28
+            16
+          ],
+          [
+            60,
+            57,
+            0,
+            96
           ]
         ]
       }
+    },
+    "llm_zero_shot": {
+      "n": 400,
+      "macro_f1_3class": 0.7775,
+      "macro_f1_4class": 0.7212,
+      "per_class_f1": {
+        "followed": 0.648,
+        "distinguished": 0.7755,
+        "overruled": 0.9091,
+        "neutral": 0.5524
+      },
+      "support": {
+        "followed": 142,
+        "distinguished": 23,
+        "overruled": 22,
+        "neutral": 213
+      },
+      "confusion_matrix": {
+        "labels": [
+          "followed",
+          "distinguished",
+          "overruled",
+          "neutral"
+        ],
+        "rows_true_cols_pred": [
+          [
+            127,
+            1,
+            1,
+            13
+          ],
+          [
+            2,
+            19,
+            0,
+            2
+          ],
+          [
+            1,
+            1,
+            20,
+            0
+          ],
+          [
+            120,
+            5,
+            1,
+            87
+          ]
+        ]
+      },
+      "model": "openai/gpt-oss-120b"
     }
   },
   "validity_coverage": {

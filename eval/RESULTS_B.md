@@ -22,19 +22,22 @@ Nodes also include every Supreme Court case in the AWS metadata (1950-2025), whi
 | mean in-degree of cited cases | 2.57 |
 
 In-degree distribution: `eval/figures/indegree_distribution.png`.
-**Extraction and resolution precision: AI-checked sample, not a human check.** The `extraction_correct` and
-`resolution_correct` columns of `eval/citation_precision_sample.csv` were filled from AI checks (Claude), not
-by a person. Row r279 was left blank (unverifiable) and is skipped. Source: `eval/graph_precision.json`, which
-records this provenance (`python -m stage0_graph.precision`).
+**Extraction precision: human check of 30 of the 150 sampled rows.** A person filled `extraction_correct` in
+`eval/citation_precision_sample.csv` for 30 rows; blank rows are skipped. Source: `eval/graph_precision.json`
+(`python -m stage0_graph.precision`).
 
 | check | correct / checked | precision | 95% interval (Wilson) |
 |---|---|---|---|
-| extraction, all | 124 / 150 | 0.827 | 0.758 to 0.879 |
-| extraction, reporter citations | 76 / 76 | 1.000 | |
-| extraction, bare case names | 48 / 74 | 0.649 | |
-| resolution | 142 / 149 | 0.953 | 0.906 to 0.977 |
+| extraction, all | 25 / 30 | 0.833 | 0.664 to 0.927 |
+| extraction, reporter citations | 17 / 17 | 1.000 | |
+| extraction, bare case names | 8 / 13 | 0.615 | |
+| resolution | 0 / 150 | **PENDING** | |
 
-A human check of the same sample is still **PENDING** (guide `eval/CITATION_CHECK_GUIDE.md`).
+The human check of resolution, and of the other 120 extraction rows, is still **PENDING** (guide
+`eval/CITATION_CHECK_GUIDE.md`). An earlier AI check (Claude) of the full sample, superseded here, gave
+extraction 124/150 (0.827; reporter citations 76/76, bare names 48/74) and resolution 142/149 (0.953); it is in
+the git history of `eval/graph_precision.json` (commit f616bad). The human check agrees with it on the pattern:
+reporter citations are always right, bare case names often are not.
 
 Most bare-name errors are running page headers (the case title printed at the top of each page) being read as
 citations. Headers of the citing judgment itself are already dropped as self-citations (8,518 mentions).
@@ -66,11 +69,38 @@ distinguished 613, overruled 93, neutral (referred to) 7,421. The keyword (cue) 
 The classifier saw only 13 overruled training examples (`logs/stage4_train.json`), so it never predicts
 overruled; overruling verdicts come from the editorial labels. Confusion matrices: `eval/figures/stage4_confusion_*.png`.
 
-### 2.3 Against the 400-row gold sample (no human labels yet)
+### 2.3 Against the 400-row human-reviewed gold sample (`eval/stage4_results.json`)
 
-Two label sets were scored. **Neither is human-annotated or manually verified.**
+The `label` column of `eval/gold_to_label.csv` was reviewed by a person for all 400 rows (commit cee7305),
+starting from the AI pre-labels in `assistant_label`. The human label differs from the AI pre-label on 39 rows.
+Classes: neutral 213, followed 142, distinguished 23, overruled 22.
 
-* **Run 1, copied suggestions** (`eval/stage4_results.json`). The `label` column was filled by copying
+| system | n | macro-F1, 3 classes (F/D/O) | macro-F1, 4 classes | F1 followed | F1 distinguished | F1 overruled | F1 neutral |
+|---|---|---|---|---|---|---|---|
+| keyword rules | 400 | 0.385 | 0.452 | 0.155 | 0.323 | 0.679 | 0.651 |
+| InLegalBERT classifier | 400 | 0.354 | 0.403 | 0.706 | 0.355 | 0.000 | 0.552 |
+| SCR editorial label itself | 319 | 0.519 | 0.489 | 0.664 | 0.312 | 0.582 | 0.398 |
+| zero-shot LLM (gpt-oss-120b via Groq, temperature 0) | 400 | **0.778** | **0.721** | 0.648 | 0.776 | 0.909 | 0.552 |
+| Indian Kanoon sentiment | | not run (no API access) | | | | | |
+
+Predictions: `eval/stage4_llm_preds.csv` (`python -m stage4_validity.llm_baseline`). Confusion matrices:
+`eval/figures/stage4_confusion_gold_*.png`.
+
+**How to read this.**
+* **The zero-shot LLM is the strongest treatment classifier**, by a wide margin on distinguished and
+  overruled. Its main error is calling neutral mentions "followed" (120 of 213 neutral rows); it rarely misses a
+  real treatment (followed 127/142, distinguished 19/23, overruled 20/22 correct).
+* **Caveat:** the human review started from AI (Claude) pre-labels, and 361 of 400 were kept unchanged. An LLM
+  may agree more easily with labels another LLM proposed, so the LLM's lead may be somewhat inflated.
+* **The fine-tuned classifier and the editorial labels agree poorly with the human gold** (0.354 and 0.519).
+  The classifier still never predicts overruled (13 training examples). The editorial labels mark many
+  mentions "overruled" where the citing court only reports an overruling by another bench (see below).
+* Stage 4's validity verdicts are built from the classifier and editorial labels, not from the LLM. Using the
+  LLM for treatment classification is the clearest improvement these results point to.
+
+#### Earlier runs, before human labels (kept for comparison)
+
+* **Run 1, copied suggestions** (`eval/stage4_results.json` as of commit f616bad; now replaced by the human run). The `label` column was filled by copying
   `suggested_label` (the SCR editors' label, else the keyword-cue guess). 340 rows; 60 rows with no
   suggestion are blank and skipped. Classes: followed 110, distinguished 100, overruled 60, neutral 70.
 * **Run 2, AI review** (`eval/stage4_results_ai_review_gold.json`). `assistant_label` was scored as gold from
@@ -84,7 +114,7 @@ Two label sets were scored. **Neither is human-annotated or manually verified.**
 | keyword rules | 0.350 (0.359) | 0.225 (0.327) |
 | InLegalBERT classifier | 0.394 (0.375) | 0.345 (0.401) |
 | SCR editorial label itself | 1.000 (1.000), n=319 | 0.402 (0.387), n=318 |
-| zero-shot LLM | PENDING (no API key) | PENDING (no API key) |
+| zero-shot LLM | not run on these labels | not run on these labels |
 | Indian Kanoon sentiment | not run (no API access) | not run |
 
 Per-class F1 of the classifier: overruled 0.0 in both runs. Followed is 0.585 in Run 1 and 0.692 in Run 2;
@@ -98,9 +128,9 @@ distinguished is 0.598 in Run 1 and 0.343 in Run 2.
 * **Run 2 uses independent labels, but they are AI labels.** On them the editorial labels agree only 0.40
   (3-class macro-F1). Most of the 60 editorial "overruled" rows report an overruling by another bench (see
   below).
-* **Human-verified gold remains PENDING.** Workflow: `eval/GOLD_LABELLING_GUIDE.md`.
+* **Both are superseded by the human-reviewed gold above.**
 
-Observations from the AI review (not human-verified):
+Observations from the AI review (made before the human review):
 
 * Of the 60 rows whose SCR editorial label is "overruled", the AI review found the citing court itself
   overruling in only a handful. Most of the others quote or report an overruling by another bench, typically
@@ -193,10 +223,31 @@ and re-run; the table is the fixed run. The other four fields were identical in 
 
 ### 3.4 Human evaluation: generic vs query-focused
 
-**Human evaluation: PENDING.** `eval/human_eval_sheet_rater1.csv` and `_rater2.csv` are in the repo but
-blank, and they were not scored. Instructions: `eval/HUMAN_EVAL_GUIDE.md`.
+**Human evaluation: 2 raters, 25 blinded pairs** (`eval/human_eval_sheet_rater1.csv`, `_rater2.csv`;
+scored in `eval/human_eval_results.json` by `stage5_summary/eval_pairs.py`; guide `eval/HUMAN_EVAL_GUIDE.md`).
+Each pair is one retrieved case summarised two ways, shown as A and B in random order (key:
+`eval/human_eval_key.csv`). Means over 50 ratings (25 pairs x 2 raters), 1-5 scale:
 
-**AI-judge stand-in, NOT a human evaluation** (`eval/ai_judge_sheet.csv`, `eval/ai_judge_results.json`).
+| | query-focused | generic |
+|---|---|---|
+| faithfulness | 3.64 | 3.80 |
+| relevance to the query | 1.32 | 1.24 |
+| usefulness | 2.24 | 2.22 |
+| preferred (of 50 judgments) | 18 | 29 (3 ties) |
+
+Rater agreement: same preference on 19 of 25 pairs (Cohen's kappa 0.56); same score on 100 of 150 score cells
+and within one point on 144. Quadratic-weighted kappa per criterion: relevance 0.72, usefulness 0.36,
+faithfulness 0.10.
+
+* **Generic summaries are preferred, and the two styles score about the same.** Relevance is low for both
+  because in most pairs the retrieved case itself is off-topic (no cross-encoder; corpus 2018-2023), and no
+  summary can make an off-topic case relevant.
+* **The faithfulness rating is unreliable** (kappa 0.10): the sheet holds only the summaries, so checking them
+  needs the full judgment, which raters were told to open only if unsure. The automatic NLI check (§3.3) is the
+  better faithfulness measure.
+* The result matches the AI-judge stand-in below on direction (generic preferred overall).
+
+**AI-judge stand-in, NOT a human evaluation (earlier, kept for comparison)** (`eval/ai_judge_sheet.csv`, `eval/ai_judge_results.json`).
 * **Rater and bias:** Claude rated the 25 blinded pairs. It is the same assistant that built the pipeline, so
   self-preference bias is possible.
 * **Blinding:** the 5-field format reveals which summary is query-focused.
