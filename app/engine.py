@@ -100,5 +100,5 @@ class Engine:
                             "surfaced_by": {n: m[r["case_id"]] for n, m in ranks.items() if r["case_id"] in m},
                             "matched_facts": self._best_sentence(facts, r["case_id"], set(c["facts_roles"])),
                             "matched_reasoning": self._best_sentence(query, r["case_id"], set(c["reasoning_roles"]))})
-        return {"query": query, "facts": facts, "results": results,
+        return {"query": query, "facts": facts, "results": results, "alpha": self.reranker.alpha,
                 "timings": {k2: round(v, 3) for k2, v in t.items()}, "components": self.components}

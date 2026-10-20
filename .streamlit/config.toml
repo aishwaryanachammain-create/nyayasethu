@@ -1,0 +1,14 @@
+# Demo theme for ui/app.py (Streamlit reads this when started from the repo root)
+[theme]
+base = "light"
+primaryColor = "#1f3a5f"
+backgroundColor = "#fbfaf7"
+secondaryBackgroundColor = "#f1ede4"
+textColor = "#1f2937"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false

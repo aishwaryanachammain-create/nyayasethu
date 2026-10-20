@@ -55,6 +55,25 @@ pytest -q                                                 # offline end-to-end t
 
 The GPU steps (12, 20, 25) run on a Kaggle T4. See `docs/kaggle.md`.
 
+## Demo UI
+
+```bash
+python scripts/build_demo_cache.py --abstractive 3 --llm   # once, before a demo (minutes: Legal-LED + LLM calls)
+streamlit run ui/app.py                                    # real data; add `-- --mock` or `-- --api http://127.0.0.1:8000`
+```
+
+* **Example queries** (buttons under the hero): the five LLM-baseline queries plus two whose results include an
+  overruled precedent (*Danamma*, overruled by *Vineeta Sharma*; *Garware Wall Ropes*). `?q=...` in the URL runs a
+  query on load.
+* **Each result card**: validity verdict with confidence, a red *not good law* strip naming the overruling judgment,
+  and tabs for the summary (precomputed Legal-LED + NLI summaries load instantly; removed sentences are listed),
+  validity evidence, citation graph (offline SVG), ranking trace (BM25 → RRF → cross-encoder → authority prior) and
+  the role-coloured judgment with the passages closest to the query.
+* **Compare with a plain LLM**: saved replies for the baseline queries (`eval/llm_only/`), live for any other query.
+* **Sidebar filters** (court, year, hide overruled, bench size), **brief export** (Markdown, or print-ready HTML →
+  PDF), and an **Evaluation** page that reads the committed results files.
+* **Demo safety**: if the engine or API fails, the UI shows the saved results from `ui/demo_cache.json` with a banner.
+
 ## Results so far
 
 **Stage 1, on real data:** the 50 Bhattacharya judgments (9,380 sentences), 5-fold document-level
