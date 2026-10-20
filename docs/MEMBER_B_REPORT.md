@@ -192,8 +192,14 @@ Kept minimal. Each one was needed for B's stages to run on A's data.
    ```
    python -m stage0_graph.precision --provenance "<who checked>"
    ```
-2. **NLI filter precision.** Hand-check a sample of kept and rejected summary sentences (§3.3 of
-   `eval/RESULTS_B.md`).
+2. **NLI filter precision.** A blinded sample of 40 kept and 40 rejected summary sentences is in
+   `eval/nli_check_sample.csv`. A person marks `supported` yes/no, then run:
+   ```
+   python -m stage5_summary.nli_check --score --provenance "<who checked>"
+   ```
+
+Both checks can be done in the click-through tool `streamlit run eval/check_tool.py`, which saves each answer
+into the CSV.
 
 Done since the first version of this report: human gold labels, human ratings, the Stage 4 LLM baseline and the
 LLM-only baseline.
